@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import './NavBar.css';
 
 
@@ -21,27 +21,37 @@ const NavBar = props => {
                     null 
                     : 
                     <li>
-                        <Link className="nav_link" to="/sign-in">Sign In</Link>
+                    {props.history.location.pathname === '/sign-in'
+                        ? <span className="nav_current">Sign In</span>
+                        : <Link className="nav_link" to="/sign-in">Sign In</Link>}
                     </li>}
                     {hasUser ?
                     null 
                     : 
                     <li>
-                        <Link className="nav_link" to="/sign-up">Sign Up</Link>
+                    {props.history.location.pathname === '/sign-up'
+                        ? <span className="nav_current">Sign Up</span>
+                        : <Link className="nav_link" to="/sign-up">Sign Up</Link>}
                     </li>}
                     {hasUser ?
                     <li>
-                        <Link className="nav_link logo" to="/labit">Lab It</Link>
+                    {props.history.location.pathname === '/labit'
+                        ? <span className="nav_current">Lab It</span>
+                        : <Link className="nav_link" to="/labit">Lab It</Link>}
                     </li>
                     : null}
                     {hasUser ?
                     <li>
-                        <Link className="nav_link logo" to="/habit">Habit</Link>
+                    {props.history.location.pathname === '/habit'
+                        ? <span className="nav_current">Habit</span>
+                        : <Link className="nav_link" to="/habit">Habit</Link>}
                     </li>
                     : null}
                     {hasUser ?
                     <li>
-                        <Link className="nav_link logo" to="/profile">Profile</Link>
+                    {props.history.location.pathname === '/profile'
+                        ? <span className="nav_current">Profile</span>
+                        : <Link className="nav_link" to="/profile">Profile</Link>}
                     </li>
                     : null}
                 </div>
@@ -50,4 +60,4 @@ const NavBar = props => {
     )
 }
 
-export default NavBar
+export default withRouter(NavBar)
