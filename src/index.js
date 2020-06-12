@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import { BrowserRouter as Router } from "react-router-dom";
+import CodeHabit from './CodeHabit';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Router>
+    <CodeHabit />
+  </Router>,
   document.getElementById('root')
 );
