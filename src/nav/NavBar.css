@@ -1,0 +1,21 @@
+.nav_container {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding-left: 1.2em;
+}
+
+.nav_link {
+    text-decoration: none;
+    padding: 0 .5em 0 .5em;
+}
+
+.nav_leftside {
+    flex: auto;
+}
+
+.nav_rightside {
+    display: flex;
+    justify-content: space-evenly;
+    flex: 0 0 content;
+}
