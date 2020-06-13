@@ -21,17 +21,17 @@ const NavBar = props => {
                     null 
                     : 
                     <li>
-                    {props.history.location.pathname === '/sign-in'
+                    {props.history.location.pathname === '/login'
                         ? <span className="nav_current">Sign In</span>
-                        : <Link className="nav_link" to="/sign-in">Sign In</Link>}
+                        : <Link className="nav_link" to="/login">Sign In</Link>}
                     </li>}
                     {hasUser ?
                     null 
                     : 
                     <li>
-                    {props.history.location.pathname === '/sign-up'
+                    {props.history.location.pathname === '/signup'
                         ? <span className="nav_current">Sign Up</span>
-                        : <Link className="nav_link" to="/sign-up">Sign Up</Link>}
+                        : <Link className="nav_link" to="/signup">Sign Up</Link>}
                     </li>}
                     {hasUser ?
                     <li>

@@ -6,7 +6,6 @@ import './CodeHabit.css'
 const CodeHabit = () => {
     return (
         <>
-            <NavBar />
             <AppViews />
         </>
     )
