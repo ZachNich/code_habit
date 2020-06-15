@@ -5,9 +5,6 @@ import './NavBar.css';
 
 const NavBar = props => {
 
-    // placeholder for conditional that will be passed down from props
-    const hasUser = false;
-
     return (
         <nav>
             <ul className="nav_container">
@@ -17,37 +14,37 @@ const NavBar = props => {
                     </li>
                 </div>
                 <div className="nav_rightside">
-                    {hasUser ?
+                    {props.hasUser ?
                     null 
                     : 
                     <li>
-                    {props.history.location.pathname === '/sign-in'
+                    {props.history.location.pathname === '/login'
                         ? <span className="nav_current">Sign In</span>
-                        : <Link className="nav_link" to="/sign-in">Sign In</Link>}
+                        : <Link className="nav_link" to="/login">Sign In</Link>}
                     </li>}
-                    {hasUser ?
+                    {props.hasUser ?
                     null 
                     : 
                     <li>
-                    {props.history.location.pathname === '/sign-up'
+                    {props.history.location.pathname === '/signup'
                         ? <span className="nav_current">Sign Up</span>
-                        : <Link className="nav_link" to="/sign-up">Sign Up</Link>}
+                        : <Link className="nav_link" to="/signup">Sign Up</Link>}
                     </li>}
-                    {hasUser ?
+                    {props.hasUser ?
                     <li>
                     {props.history.location.pathname === '/labit'
                         ? <span className="nav_current">Lab It</span>
                         : <Link className="nav_link" to="/labit">Lab It</Link>}
                     </li>
                     : null}
-                    {hasUser ?
+                    {props.hasUser ?
                     <li>
                     {props.history.location.pathname === '/habit'
                         ? <span className="nav_current">Habit</span>
                         : <Link className="nav_link" to="/habit">Habit</Link>}
                     </li>
                     : null}
-                    {hasUser ?
+                    {props.hasUser ?
                     <li>
                     {props.history.location.pathname === '/profile'
                         ? <span className="nav_current">Profile</span>
