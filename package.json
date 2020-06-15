@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.2.1",
     "codejar": "^3.0.0",
     "prism-react-renderer": "^1.1.1",
+    "prismjs": "^1.20.0",
     "react": "^16.13.1",
     "react-codejar": "^1.0.1",
     "react-dom": "^16.13.1",
