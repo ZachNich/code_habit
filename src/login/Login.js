@@ -25,6 +25,7 @@ const Login = props => {
                             stateToChange.userId = data.id
                             stateToChange.joinDate = new Date().toLocaleDateString('en-US', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
                             setProfile(stateToChange)
+                            props.setUser(creds)
                             props.history.push('/')
                         })
                 }
