@@ -25,7 +25,7 @@ const AppViews = props => {
             <Route exact path="/" render={props => <NavBar hasUser={hasUser} />} />
             <Route exact path="/signup" render={props => <Login isNew={true} setUser={setUser} {...props} />} />
             <Route exact path="/login" render={props => <Login isNew={false} setUser={setUser} {...props} />} />
-            <Route exact path="/labit" render={props => <> <NavBar hasUser={hasUser} /> <LabIt /> </>} />
+            <Route exact path="/labit" render={props => <> <NavBar hasUser={hasUser} /> <LabIt {...props} /> </>} />
         </>
     )
 }
