@@ -7,7 +7,7 @@ import ApiManager from '../modules/ApiManager'
 import getRandomIndex from '../helpers/getRandomIndex'
 import './LabIt.css';
 
-const Lab = props => {
+const Habit = props => {
     const [problem, setProblem] = useState({id: null, setup: '', description: '', testSuite: '', level: null});
     const [profile, setProfile] = useState({id: null, userId: JSON.parse(sessionStorage.user).id, joinDate: "", level: null});
     const [result, setResult] = useState('Ship your code to see the result!')
@@ -15,11 +15,12 @@ const Lab = props => {
     useEffect(() => {
         ApiManager.getAll('userSolutions').then(solutions => {
             ApiManager.getAll('problems').then(problems => {
-                const unsolvedProblems = problems.filter(problem => !solutions.some(solution => solution.problemId === problem.id))
-                setProblem(getRandomIndex(unsolvedProblems))
+                const dueReviews = solutions.filter(solution => Date.parse(solution.nextEncounterDate) <= Date.parse(new Date()))
+                const reviewProblems = problems.filter(problem => dueReviews.some(solution => solution.problemId === problem.id))
+                setProblem(getRandomIndex(reviewProblems))
             })
         })
-        ApiManager.getByProperty('profiles', 'userId', JSON.parse(sessionStorage.user).id).then(data => {
+            ApiManager.getByProperty('profiles', 'userId', JSON.parse(sessionStorage.user).id).then(data => {
             setProfile(data)
         })
     }, [])
@@ -38,4 +39,4 @@ const Lab = props => {
     )
 }
 
-export default Lab
+export default Habit
