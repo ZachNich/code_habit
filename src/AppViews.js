@@ -5,7 +5,7 @@ import NavBar from "./nav/NavBar";
 import LabIt from "./lab/LabIt";
 
 const AppViews = props => {
-    const isAuthenticated = () => sessionStorage.getItem("credentials") !== null
+    const isAuthenticated = () => sessionStorage.getItem("user") !== null
     const [hasUser, setHasUser] = useState(isAuthenticated())
 
     const clearUser = () => {
@@ -15,7 +15,7 @@ const AppViews = props => {
 
     const setUser = user => {
         clearUser()
-        sessionStorage.setItem("credentials", JSON.stringify(user))
+        sessionStorage.setItem("user", JSON.stringify(user))
         setHasUser(isAuthenticated())
     }
 
