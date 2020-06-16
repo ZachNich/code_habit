@@ -8,7 +8,7 @@ let strFunction = ''
 
 const Coder = props => {
     // add props.problem.setup to useState
-    const [code, setCode] = useState('');
+    const [code, setCode] = useState(props.problem.setup);
     
     const highlight = editor => {
         let code = Prism.highlight(editor.textContent, Prism.languages.javascript, 'javascript');
@@ -16,14 +16,19 @@ const Coder = props => {
         strFunction = editor.textContent;
     }
     
+    // ATTN: props.problem is handled asynchronously, so it's not available when you want to set it to the initial function string. How to handle this? Ask teacher. 
+    useEffect(() => setCode(props.problem.setup), [])
+
     return (
         <>
+            <h3>Code Here </h3>
             <ReactCodeJar
                 code={code} // Initial code value
                 onUpdate={setCode} // Update the text
                 highlight={highlight} // Highlight function, receive the editor
             />
             <button type="button" onClick={() => {
+                console.log(props.problem)
                     if (strFunction &&
                         strFunction.match(/\(([^)]+)\)/) &&
                         strFunction.includes('{') &&

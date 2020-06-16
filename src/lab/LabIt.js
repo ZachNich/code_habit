@@ -13,11 +13,18 @@ const Lab = props => {
     const [profile, setProfile] = useState({});
 
     useEffect(() => {
-        ApiManager.getAll('problems').then(setProblems)
         ApiManager.getAll('userSolutions').then(setSolutions)
         ApiManager.getByProperty('profiles', 'userId', JSON.parse(sessionStorage.user).id).then(setProfile)
     }, [])
 
+    // returns only new problems that haven't been attempted/solved by the user
+    useEffect(() => {
+        ApiManager.getAll('problems').then(data => {
+            const unsolvedProblems = data.filter(problem => !solutions.some(solution => solution.problemId === problem.id))
+            setProblems(unsolvedProblems)
+        })
+    }, [solutions])
+    
     // return random problem from available problems
     useEffect(() => {
         setProblem(getRandomIndex(problems))
