@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 
 const TestResults = props => {
     return (
-        null
+        <>
+            <h3>Test Results:</h3>
+        </>
     )
 }
 
