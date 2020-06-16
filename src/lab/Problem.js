@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Problem = props => {
+    const [description, setDescription] = useState('')
+
+    useEffect(() => setDescription(props.problem.description), [props.problem])
+
     return (
-        null
+        <>
+            <h3>Here's a problem:</h3>
+            <p>{description}</p>
+        </>
     )
 }
 

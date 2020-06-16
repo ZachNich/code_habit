@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import Coder from './Coder';
 import Problem from './Problem';
 import Resources from './Resources';
@@ -7,34 +7,26 @@ import ApiManager from '../modules/ApiManager'
 import getRandomIndex from '../helpers/getRandomIndex'
 
 const Lab = props => {
-    const [problems, setProblems] = useState([]);
-    const [problem, setProblem] = useState({});
-    const [solutions, setSolutions] = useState([]);
-    const [profile, setProfile] = useState({});
+    const [problem, setProblem] = useState({id: null, setup: '', description: '', testSuite: '', level: null});
+    const [profile, setProfile] = useState({id: null, userId: JSON.parse(sessionStorage.user).id, joinDate: "", level: null});
 
     useEffect(() => {
-        ApiManager.getAll('userSolutions').then(setSolutions)
-        ApiManager.getByProperty('profiles', 'userId', JSON.parse(sessionStorage.user).id).then(setProfile)
-    }, [])
-
-    // returns only new problems that haven't been attempted/solved by the user
-    useEffect(() => {
-        ApiManager.getAll('problems').then(data => {
-            const unsolvedProblems = data.filter(problem => !solutions.some(solution => solution.problemId === problem.id))
-            setProblems(unsolvedProblems)
+        ApiManager.getAll('userSolutions').then(solutions => {
+            ApiManager.getAll('problems').then(problems => {
+                const unsolvedProblems = problems.filter(problem => !solutions.some(solution => solution.problemId === problem.id))
+                        setProblem(getRandomIndex(unsolvedProblems))
+                })
         })
-    }, [solutions])
-    
-    // return random problem from available problems
-    useEffect(() => {
-        setProblem(getRandomIndex(problems))
-    }, [problems])
+        ApiManager.getByProperty('profiles', 'userId', JSON.parse(sessionStorage.user).id).then(data => {
+            setProfile(data)
+        })
+    }, [])
 
     return (
         <>
             <Problem problem={problem} />
             <Resources problem={problem} />
-            <Coder problem={problem} problems={problems} />
+            <Coder problem={problem} />
             <TestResults />
         </>
     )
