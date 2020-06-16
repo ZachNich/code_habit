@@ -4,7 +4,7 @@ import './NavBar.css';
 
 
 const NavBar = props => {
-
+    
     return (
         <nav>
             <ul className="nav_container">
@@ -12,6 +12,20 @@ const NavBar = props => {
                     <li>
                         <Link className="nav_link logo" to="/">Logo</Link>
                     </li>
+                    {props.hasUser ?
+                    <li>
+                    {props.history.location.pathname === '/labit'
+                        ? <span className="nav_current">Lab It</span>
+                        : <Link className="nav_link" to="/labit">Lab It</Link>}
+                    </li>
+                    : null}
+                    {props.hasUser ?
+                    <li>
+                    {props.history.location.pathname === '/habit'
+                        ? <span className="nav_current">Habit</span>
+                        : <Link className="nav_link" to="/habit">Habit</Link>}
+                    </li>
+                    : null}
                 </div>
                 <div className="nav_rightside">
                     {props.hasUser ?
@@ -30,20 +44,6 @@ const NavBar = props => {
                         ? <span className="nav_current">Sign Up</span>
                         : <Link className="nav_link" to="/signup">Sign Up</Link>}
                     </li>}
-                    {props.hasUser ?
-                    <li>
-                    {props.history.location.pathname === '/labit'
-                        ? <span className="nav_current">Lab It</span>
-                        : <Link className="nav_link" to="/labit">Lab It</Link>}
-                    </li>
-                    : null}
-                    {props.hasUser ?
-                    <li>
-                    {props.history.location.pathname === '/habit'
-                        ? <span className="nav_current">Habit</span>
-                        : <Link className="nav_link" to="/habit">Habit</Link>}
-                    </li>
-                    : null}
                     {props.hasUser ?
                     <li>
                     {props.history.location.pathname === '/profile'

@@ -29,9 +29,37 @@ const Coder = props => {
                 const unsolvedProblems = problems.filter(problem => !solutions.some(solution => solution.problemId === problem.id))
                 const index = unsolvedProblems.findIndex(object => object.id === props.problem.id)
                 unsolvedProblems.splice(index, 1)
-                props.setProblem(getRandomIndex(unsolvedProblems))
+                if (unsolvedProblems.length > 0) {
+                    props.setProblem(getRandomIndex(unsolvedProblems))
+                } else {
+                    window.alert('Good work! No new problems left. Let\'s take you home.')
+                    props.history.push('/')
+                }
             })
         })
+    }
+
+    const testSubmission = e => {
+        if (strFunction &&
+            strFunction.match(/\(([^)]+)\)/) &&
+            strFunction.includes('{') &&
+            strFunction.includes('}')) {
+                let testArg = strFunction.match(/\(([^)]+)\)/)[1];
+                let start = strFunction.indexOf('{') + 1
+                let end = strFunction.lastIndexOf('}')
+                let funcStr = strFunction.substring(start, end)
+                let testFunction = new Function(testArg, funcStr);
+
+            // Learn Docker later to make runtime environment for test suites, but can hardcode tests here for now (based on problem.id, while putting these hardcoded 'testfunction === x' into individual files somewhere else so you can call them as variables instead of these long conditionals)
+            
+            // if (problemTests.problem1(testFunction))
+                if (problemTests[`problem${props.problem.id}`](testFunction)) { 
+                    props.setResult('All tests passed. Good work!')
+                } else { 
+                    props.setResult('Tests failed! Try again.')
+                }
+        } else window.alert("Write your function! Be sure to include parentheses around your parameters and brackets around your function body.")
+
     }
 
     return (
@@ -43,26 +71,7 @@ const Coder = props => {
                 highlight={highlight} // Highlight function, receive the editor
             />
             <button type="button" onClick={skipProblem}>Skip It</button>
-            <button type="button" onClick={() => {
-                if (strFunction &&
-                    strFunction.match(/\(([^)]+)\)/) &&
-                    strFunction.includes('{') &&
-                    strFunction.includes('}')) {
-                        let testArg = strFunction.match(/\(([^)]+)\)/)[1];
-                        let start = strFunction.indexOf('{') + 1
-                        let end = strFunction.lastIndexOf('}')
-                        let funcStr = strFunction.substring(start, end)
-                        let testFunction = new Function(testArg, funcStr);
-
-                    // Learn Docker later to make runtime environment for test suites, but can hardcode tests here for now (based on problem.id, while putting these hardcoded 'testfuntion === x' into individual files somewhere else so you can call them as variables instead of these long conditionals)
-                    
-                    // change to props.problem.id once passed down from LabIt.js
-                    if (props.problem.id === 1) {
-                        if (problemTests.problem1(testFunction)) { console.log('All tests passed. Good work!') }
-                        else { (console.log('Tests failed! Try again.')) }
-                    }
-                } else window.alert("Write your function! Be sure to include parentheses around your parameters and brackets around your function body.")
-            }}>Ship It</button>
+            <button type="button" onClick={testSubmission}>Ship It</button>
         </>
     )
 }

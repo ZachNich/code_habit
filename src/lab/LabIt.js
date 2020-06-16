@@ -10,6 +10,7 @@ import './LabIt.css';
 const Lab = props => {
     const [problem, setProblem] = useState({id: null, setup: '', description: '', testSuite: '', level: null});
     const [profile, setProfile] = useState({id: null, userId: JSON.parse(sessionStorage.user).id, joinDate: "", level: null});
+    const [result, setResult] = useState('Ship your code to see the result!')
 
     useEffect(() => {
         ApiManager.getAll('userSolutions').then(solutions => {
@@ -30,8 +31,8 @@ const Lab = props => {
                 <Resources problem={problem} />
             </div>
             <div className="right-side">
-                <Coder problem={problem} setProblem={setProblem} {...props} />
-                <TestResults />
+                <Coder problem={problem} setProblem={setProblem} setResult={setResult} {...props} />
+                <TestResults result={result} />
             </div>
         </div>
     )
