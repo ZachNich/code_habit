@@ -1,0 +1,13 @@
+.main-container {
+    display: flex;
+}
+
+.left-side {
+    flex: auto;
+    padding: 1.5em;
+}
+
+.right-side {
+    flex: 0 0 55%;
+    padding: 1.5em;
+}

@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { Route, Redirect } from "react-router-dom";
 import Login from "./login/Login";
 import NavBar from "./nav/NavBar";
+import LabIt from "./lab/LabIt";
 
 const AppViews = props => {
-    const isAuthenticated = () => sessionStorage.getItem("credentials") !== null
+    const isAuthenticated = () => sessionStorage.getItem("user") !== null
     const [hasUser, setHasUser] = useState(isAuthenticated())
 
     const clearUser = () => {
@@ -14,7 +15,7 @@ const AppViews = props => {
 
     const setUser = user => {
         clearUser()
-        sessionStorage.setItem("credentials", JSON.stringify(user))
+        sessionStorage.setItem("user", JSON.stringify(user))
         setHasUser(isAuthenticated())
     }
 
@@ -24,6 +25,7 @@ const AppViews = props => {
             <Route exact path="/" render={props => <NavBar hasUser={hasUser} />} />
             <Route exact path="/signup" render={props => <Login isNew={true} setUser={setUser} {...props} />} />
             <Route exact path="/login" render={props => <Login isNew={false} setUser={setUser} {...props} />} />
+            <Route exact path="/labit" render={props => <> <NavBar hasUser={hasUser} /> <LabIt {...props} /> </>} />
         </>
     )
 }
