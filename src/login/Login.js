@@ -25,7 +25,7 @@ const Login = props => {
                             stateToChange.userId = data.id
                             stateToChange.joinDate = new Date().toLocaleDateString('en-US', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
                             setProfile(stateToChange)
-                            props.setUser(creds)
+                            props.setUser(creds.id)
                             props.history.push('/')
                         })
                 }
@@ -39,7 +39,7 @@ const Login = props => {
                 if (data.length > 0) {
                     if (data[0].email === creds.email && data[0].password === creds.password) {
                         creds.id = data[0].id
-                        props.setUser(creds)
+                        props.setUser(creds.id)
                         props.history.push('/')
                     } else {
                         window.alert('Incorrect email or password. Please try again.')

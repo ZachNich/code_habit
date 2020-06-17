@@ -10,7 +10,7 @@ let strFunction = ''
 
 const Coder = props => {
     const [code, setCode] = useState('');
-    
+
     const highlight = editor => {
         let code = Prism.highlight(editor.textContent, Prism.languages.javascript, 'javascript');
         editor.innerHTML = code;
@@ -32,7 +32,7 @@ const Coder = props => {
                 if (unsolvedProblems.length > 0) {
                     props.setProblem(getRandomIndex(unsolvedProblems))
                 } else {
-                    window.alert('Good work! No new problems left. Let\'s take you home.')
+                    props.isReview ? window.alert('Nice! All your reviews are taken care of. We\'ll take you home.') : window.alert('Good work! No new problems left. Let\'s take you home.')
                     props.history.push('/')
                 }
             })
@@ -44,16 +44,28 @@ const Coder = props => {
             strFunction.match(/\(([^)]+)\)/) &&
             strFunction.includes('{') &&
             strFunction.includes('}')) {
-                let testArg = strFunction.match(/\(([^)]+)\)/)[1];
-                let start = strFunction.indexOf('{') + 1
-                let end = strFunction.lastIndexOf('}')
-                let funcStr = strFunction.substring(start, end)
-                let testFunction = new Function(testArg, funcStr);
+                const testArg = strFunction.match(/\(([^)]+)\)/)[1]
+                const start = strFunction.indexOf('{') + 1
+                const end = strFunction.lastIndexOf('}')
+                const funcStr = strFunction.substring(start, end)
+                const testFunction = new Function(testArg, funcStr)
 
             // Learn Docker later to make runtime environment for test suites, but can hardcode tests here for now (based on problem.id, while putting these hardcoded 'testfunction === x' into individual files somewhere else so you can call them as variables instead of these long conditionals)
             
                 if (problemTests[`problem${props.problem.id}`](testFunction)) { 
                     props.setResult('All tests passed. Good work!')
+                    const nextReview = new Date()
+                    nextReview.setDate(nextReview.getDate() + 1)
+                    const solution = {
+                        profileId: JSON.parse(sessionStorage.user),
+                        problemId: props.problem.id, 
+                        difficultyAssessed: "", 
+                        timeTaken: 0, 
+                        description: strFunction, 
+                        solveDate: new Date().toLocaleString('en-US'), 
+                        nextEncounterDate: nextReview.toLocaleString('en-US')
+                    }
+                    ApiManager.post('userSolutions', solution)
                 } else { 
                     props.setResult('Tests failed! Try again.')
                 }

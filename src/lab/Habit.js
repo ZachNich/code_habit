@@ -9,7 +9,6 @@ import './LabIt.css';
 
 const Habit = props => {
     const [problem, setProblem] = useState({id: null, setup: '', description: '', testSuite: '', level: null});
-    const [profile, setProfile] = useState({id: null, userId: JSON.parse(sessionStorage.user).id, joinDate: "", level: null});
     const [result, setResult] = useState('Ship your code to see the result!')
 
     useEffect(() => {
@@ -20,9 +19,6 @@ const Habit = props => {
                 setProblem(getRandomIndex(reviewProblems))
             })
         })
-            ApiManager.getByProperty('profiles', 'userId', JSON.parse(sessionStorage.user).id).then(data => {
-            setProfile(data)
-        })
     }, [])
 
     return (
@@ -32,7 +28,7 @@ const Habit = props => {
                 <Resources problem={problem} />
             </div>
             <div className="right-side">
-                <Coder problem={problem} setProblem={setProblem} setResult={setResult} {...props} />
+                <Coder problem={problem} setProblem={setProblem} setResult={setResult} isReview={true} {...props} />
                 <TestResults result={result} />
             </div>
         </div>
