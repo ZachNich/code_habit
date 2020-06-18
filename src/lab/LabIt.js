@@ -8,9 +8,9 @@ import getRandomIndex from '../helpers/getRandomIndex'
 import './LabIt.css';
 
 const Lab = props => {
-    const [problem, setProblem] = useState({id: null, setup: '', description: '', testSuite: '', level: null});
     const [result, setResult] = useState('Ship your code to see the result!')
     const [problems, setProblems] = useState([{}])
+    const [problem, setProblem] = useState({id: null, setup: '', description: '', testSuite: '', level: null});
 
     useEffect(() => {
         ApiManager.getAll('userSolutions').then(solutions => {
@@ -32,7 +32,7 @@ const Lab = props => {
                 <Resources problem={problem} />
             </div>
             <div className="right-side">
-                <Coder problem={problem} setProblem={setProblem} problems={problems} setProblem={setProblems} setResult={setResult} isReview={false} {...props} />
+                <Coder problem={problem} setProblem={setProblem} problems={problems} setProblems={setProblems} setResult={setResult} isReview={false} {...props} />
                 <TestResults result={result} />
             </div>
         </div>

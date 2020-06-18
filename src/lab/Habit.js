@@ -35,7 +35,7 @@ const Habit = props => {
                 <Resources problem={problem} />
             </div>
             <div className="right-side">
-                <Coder problem={problem} reviews={reviews} setReviews={setReviews} setProblem={setProblem} setResult={setResult} isReview={true} {...props} />
+                <Coder problem={problem} setProblem={setProblem} reviews={reviews} setReviews={setReviews} setResult={setResult} isReview={true} {...props} />
                 <TestResults result={result} />
             </div>
         </div>
