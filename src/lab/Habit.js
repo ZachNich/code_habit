@@ -16,14 +16,15 @@ const Habit = props => {
         ApiManager.getAll('userSolutions').then(solutions => {
             ApiManager.getAll('problems').then(problems => {
                 const dueReviews = solutions.filter(solution => Date.parse(solution.nextEncounterDate) <= Date.parse(new Date()))
-                const reviewProblems = problems.filter(problem => dueReviews.some(solution => solution.problemId === problem.id))
+                const dontReviews = solutions.filter(solution => Date.parse(solution.nextEncounterDate) > Date.parse(new Date()))
+                const filteredReviews = dueReviews.filter(solution => !dontReviews.some(sol => solution.problemId === sol.problemId))
+                const reviewProblems = problems.filter(problem => filteredReviews.some(solution => solution.problemId === problem.id))
                 setReviews(reviewProblems)
             })
         })
     }, [])
 
     useEffect(() => {
-        console.log('useeffect', reviews)
         setProblem(getRandomIndex(reviews))
     }, [reviews])
 
