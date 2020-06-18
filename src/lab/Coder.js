@@ -66,7 +66,6 @@ const Coder = props => {
 
             // Learn Docker later to make runtime environment for test suites, but can hardcode tests here for now (based on problem.id, while putting these hardcoded 'testfunction === x' into individual files somewhere else so you can call them as variables instead of these long conditionals)
             
-            console.log(`problem${props.problem.id}`)
                 if (problemTests[`problem${props.problem.id}`](testFunction)) { 
                     props.setResult('All tests passed. Good work!')
                     const nextReview = new Date()
