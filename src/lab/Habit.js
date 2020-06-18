@@ -8,18 +8,24 @@ import getRandomIndex from '../helpers/getRandomIndex'
 import './LabIt.css';
 
 const Habit = props => {
-    const [problem, setProblem] = useState({id: null, setup: '', description: '', testSuite: '', level: null});
     const [result, setResult] = useState('Ship your code to see the result!')
+    const [reviews, setReviews] = useState([{}])
+    const [problem, setProblem] = useState({id: null, setup: '', description: '', testSuite: '', level: null});
 
     useEffect(() => {
         ApiManager.getAll('userSolutions').then(solutions => {
             ApiManager.getAll('problems').then(problems => {
                 const dueReviews = solutions.filter(solution => Date.parse(solution.nextEncounterDate) <= Date.parse(new Date()))
                 const reviewProblems = problems.filter(problem => dueReviews.some(solution => solution.problemId === problem.id))
-                setProblem(getRandomIndex(reviewProblems))
+                setReviews(reviewProblems)
             })
         })
     }, [])
+
+    useEffect(() => {
+        console.log('useeffect', reviews)
+        setProblem(getRandomIndex(reviews))
+    }, [reviews])
 
     return (
         <div className="main-container">
@@ -28,7 +34,7 @@ const Habit = props => {
                 <Resources problem={problem} />
             </div>
             <div className="right-side">
-                <Coder problem={problem} setProblem={setProblem} setResult={setResult} isReview={true} {...props} />
+                <Coder problem={problem} reviews={reviews} setReviews={setReviews} setProblem={setProblem} setResult={setResult} isReview={true} {...props} />
                 <TestResults result={result} />
             </div>
         </div>

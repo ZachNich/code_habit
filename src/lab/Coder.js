@@ -23,7 +23,7 @@ const Coder = props => {
 
     // skips to next random unsolved problem, but does not return the current problem
     // TODO: needs to persist modified array of unsolved problems, otherwise skipped problems will come back in queue randomly
-    const skipProblem = e => {
+    const skipNewProblem = e => {
         ApiManager.getAll('userSolutions').then(solutions => {
             ApiManager.getAll('problems').then(problems => {
                 const unsolvedProblems = problems.filter(problem => !solutions.some(solution => solution.problemId === problem.id))
@@ -32,11 +32,25 @@ const Coder = props => {
                 if (unsolvedProblems.length > 0) {
                     props.setProblem(getRandomIndex(unsolvedProblems))
                 } else {
-                    props.isReview ? window.alert('Nice! All your reviews are taken care of. We\'ll take you home.') : window.alert('Good work! No new problems left. Let\'s take you home.')
+                    window.alert('Good work! No new problems left. Let\'s take you home.')
                     props.history.push('/')
                 }
             })
         })
+    }
+
+    const stallReview = e => {
+        const index = props.reviews.findIndex(object => object.id === props.problem.id)
+        if (props.reviews.length > 1) {
+            const reviewsCopy = [...props.reviews]
+            reviewsCopy.splice(index, 1)
+            props.setProblem(getRandomIndex(reviewsCopy))
+        } else if (props.reviews.length === 1) {
+            window.alert('This is the only review left! No putting this one off, champ.')
+        } else {
+            window.alert('Nice! All your reviews are taken care of. We\'ll take you home.')
+            props.history.push('/')
+        }
     }
 
     const testSubmission = e => {
@@ -65,6 +79,17 @@ const Coder = props => {
                         solveDate: new Date().toLocaleString('en-US'), 
                         nextEncounterDate: nextReview.toLocaleString('en-US')
                     }
+                    if (props.isReview) {
+                        const reviewsCopy = [...props.reviews]
+                        const index = reviewsCopy.findIndex(object => object.id === props.problem.id)
+                        reviewsCopy.splice(index, 1)
+                        props.setReviews(reviewsCopy)
+                    } else {
+                        // const problemsCopy = [...props.problems]
+                        // const index = problemsCopy.findIndex(object => object.id === props.problem.id)
+                        // problemsCopy.splice(index, 1)
+                        // props.setProblems(problemsCopy)
+                    }
                     ApiManager.post('userSolutions', solution)
                 } else { 
                     props.setResult('Tests failed! Try again.')
@@ -81,7 +106,8 @@ const Coder = props => {
                 onUpdate={setCode} // Update the text
                 highlight={highlight} // Highlight function, receive the editor
             />
-            <button type="button" onClick={skipProblem}>Skip It</button>
+            {props.isReview ? <button type="button" onClick={stallReview}>Stall It</button>
+            : <button type="button" onClick={skipNewProblem}>Skip It</button>}
             <button type="button" onClick={testSubmission}>Ship It</button>
         </>
     )
