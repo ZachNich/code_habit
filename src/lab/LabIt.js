@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Coder from './Coder';
 import Problem from './Problem';
 import Resources from './Resources';
@@ -9,20 +9,21 @@ import './LabIt.css';
 
 const Lab = props => {
     const [problem, setProblem] = useState({id: null, setup: '', description: '', testSuite: '', level: null});
-    const [profile, setProfile] = useState({id: null, userId: JSON.parse(sessionStorage.user).id, joinDate: "", level: null});
     const [result, setResult] = useState('Ship your code to see the result!')
+    const [problems, setProblems] = useState([{}])
 
     useEffect(() => {
         ApiManager.getAll('userSolutions').then(solutions => {
             ApiManager.getAll('problems').then(problems => {
                 const unsolvedProblems = problems.filter(problem => !solutions.some(solution => solution.problemId === problem.id))
-                setProblem(getRandomIndex(unsolvedProblems))
+                setProblems(unsolvedProblems)
             })
         })
-        ApiManager.getByProperty('profiles', 'userId', JSON.parse(sessionStorage.user).id).then(data => {
-            setProfile(data)
-        })
     }, [])
+
+    useEffect(() => {
+        setProblem(getRandomIndex(problems))
+    }, [problems])
 
     return (
         <div className="main-container">
@@ -31,7 +32,7 @@ const Lab = props => {
                 <Resources problem={problem} />
             </div>
             <div className="right-side">
-                <Coder problem={problem} setProblem={setProblem} setResult={setResult} {...props} />
+                <Coder problem={problem} setProblem={setProblem} problems={problems} setProblem={setProblems} setResult={setResult} isReview={false} {...props} />
                 <TestResults result={result} />
             </div>
         </div>
