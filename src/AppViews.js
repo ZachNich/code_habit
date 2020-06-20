@@ -8,6 +8,7 @@ import Habit from "./lab/Habit";
 const AppViews = props => {
     const isAuthenticated = () => sessionStorage.getItem("user") !== null
     const [hasUser, setHasUser] = useState(isAuthenticated())
+    const [hasSuccessWindow, setHasSuccessWindow] = useState(false)
 
     const clearUser = () => {
         sessionStorage.clear();
@@ -20,14 +21,15 @@ const AppViews = props => {
         setHasUser(isAuthenticated())
     }
 
+    const toggleSuccess = () => setHasSuccessWindow(!hasSuccessWindow)
 
     return (
         <>
             <Route exact path="/" render={props => <NavBar hasUser={hasUser} />} />
             <Route exact path="/signup" render={props => <Login isNew={true} setUser={setUser} {...props} />} />
             <Route exact path="/login" render={props => <Login isNew={false} setUser={setUser} {...props} />} />
-            <Route exact path="/labit" render={props => <> <NavBar hasUser={hasUser} /> <LabIt {...props} /> </>} />
-            <Route exact path="/habit" render={props => <> <NavBar hasUser={hasUser} /> <Habit {...props} /> </>} />
+            <Route exact path="/labit" render={props => <> <NavBar hasUser={hasUser} /> <LabIt {...props} toggleSuccess={toggleSuccess} hasSuccessWindow={hasSuccessWindow} /> </>} />
+            <Route exact path="/habit" render={props => <> <NavBar hasUser={hasUser} /> <Habit {...props} toggleSuccess={toggleSuccess} hasSuccessWindow={hasSuccessWindow} /> </>} />
         </>
     )
 }

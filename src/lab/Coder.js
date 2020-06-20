@@ -70,27 +70,13 @@ const Coder = props => {
                     props.setResult('All tests passed. Good work!')
                     const nextReview = new Date()
                     nextReview.setDate(nextReview.getDate() + 1)
-                    const solution = {
-                        profileId: JSON.parse(sessionStorage.user),
-                        problemId: props.problem.id, 
-                        difficultyAssessed: "", 
-                        timeTaken: 0, 
-                        description: strFunction, 
-                        solveDate: new Date().toLocaleString('en-US'), 
-                        nextEncounterDate: nextReview.toLocaleString('en-US')
-                    }
-                    if (props.isReview) {
-                        const reviewsCopy = [...props.reviews]
-                        const index = reviewsCopy.findIndex(object => object.id === props.problem.id)
-                        reviewsCopy.splice(index, 1)
-                        props.setReviews(reviewsCopy)
-                    } else {
-                        const problemsCopy = [...props.problems]
-                        const index = problemsCopy.findIndex(object => object.id === props.problem.id)
-                        problemsCopy.splice(index, 1)
-                        props.setProblems(problemsCopy)
-                    }
-                    ApiManager.post('userSolutions', solution)
+                    const solution = {...props.solve}
+                    solution.problemId = props.problem.id
+                    solution.description = strFunction
+                    solution.solveDate = new Date().toLocaleString('en-US')
+                    solution.nextEncounterDate = nextReview.toLocaleString('en-US')
+                    props.setSolve(solution)
+                    props.toggleSuccess()
                 } else { 
                     props.setResult('Tests failed! Try again.')
                 }
