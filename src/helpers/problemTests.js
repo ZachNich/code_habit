@@ -3,7 +3,7 @@ const problem1 = testFunction => {
 }
 
 const problem2 = testFunction => {
-    return testFunction('abba', ['aabb', 'abcd', 'bbaa', 'dada']) === ['aabb', 'bbaa'] && testFunction('racer', ['crazer', 'carer', 'racar', 'caers', 'racer']) === ['carer', 'racer'] && testFunction('laser', ['lazing', 'lazy', 'lacer']) === []
+    return testFunction('abba', ['aabb', 'abcd', 'bbaa', 'dada']) === ['aabb', 'bbaa'] && testFunction('racer', ['crazer', 'carer', 'racar', 'caers', 'racer']) === ['carer', 'racer'] && testFunction('laser', ['lacer', 'lazing', 'lazy']) === []
 }
 
 const problem3 = testFunction => {
