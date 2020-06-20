@@ -25,24 +25,25 @@ const Login = props => {
                             stateToChange.userId = data.id
                             stateToChange.joinDate = new Date().toLocaleDateString('en-US', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
                             setProfile(stateToChange)
-                            props.setUser(creds.id)
+                            props.setUser({id: creds.id, username: creds.username})
                             props.history.push('/')
                         })
                 }
             })
     }
 
+
     const handleLogin = e => {
         e.preventDefault()
-        ApiManager.getByProperty('users', 'email', creds.email)
+        ApiManager.getByProperty('users', 'username', creds.username)
             .then(data => {
                 if (data.length > 0) {
-                    if (data[0].email === creds.email && data[0].password === creds.password) {
+                    if (data[0].username === creds.username && data[0].password === creds.password) {
                         creds.id = data[0].id
-                        props.setUser(creds.id)
+                        props.setUser({id: creds.id, username: creds.username})
                         props.history.push('/')
                     } else {
-                        window.alert('Incorrect email or password. Please try again.')
+                        window.alert('Incorrect username or password. Please try again.')
                     }
                 } else {
                     window.alert('No user found. Please try again or create an account.')
@@ -59,8 +60,8 @@ const Login = props => {
     return (
         <form>
             <fieldset>
-                {props.isNew ? <input required type="text" id="username" placeholder="username" onChange={handleFieldChange} /> : null}
-                <input required type="email" id="email" placeholder="email" onChange={handleFieldChange} />
+                <input required type="text" id="username" placeholder="username" onChange={handleFieldChange} />
+                {props.isNew ? <input required type="email" id="email" placeholder="email" onChange={handleFieldChange} /> : null}
                 <input required type="password" id="password" placeholder="password" onChange={handleFieldChange} />
                 {props.isNew ? <button type="button" onClick={constructNewUser}>SIGN UP</button> : <button type="button" onClick={handleLogin}>SIGN IN</button>}
                 {props.isNew ? <Link className="small_link" to="/login">Sign in</Link> : <Link className="small_link" to="/signup">Sign up</Link>}

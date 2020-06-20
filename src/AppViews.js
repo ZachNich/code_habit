@@ -30,6 +30,7 @@ const AppViews = props => {
             <Route exact path="/login" render={props => <Login isNew={false} setUser={setUser} {...props} />} />
             <Route exact path="/labit" render={props => <> <NavBar hasUser={hasUser} /> <LabIt {...props} toggleSuccess={toggleSuccess} hasSuccessWindow={hasSuccessWindow} /> </>} />
             <Route exact path="/habit" render={props => <> <NavBar hasUser={hasUser} /> <Habit {...props} toggleSuccess={toggleSuccess} hasSuccessWindow={hasSuccessWindow} /> </>} />
+            <Route path="/profile/:username" render={props => <NavBar hasUser={hasUser} />} />
         </>
     )
 }
