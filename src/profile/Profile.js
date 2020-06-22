@@ -41,7 +41,6 @@ const Profile = props => {
                 }
                 ApiManager.getAndExpand('userSolutions', data[hardest].id, 'problem')
                     .then(solution => {
-                        console.log(solution)
                         setHardestProblem(solution.problem.description)
                         setHardestSolution(solution.description)
                     })
