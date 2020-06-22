@@ -5,6 +5,8 @@ import NavBar from "./nav/NavBar";
 import LabIt from "./lab/LabIt";
 import Habit from "./lab/Habit";
 import Profile from "./profile/Profile";
+import Home from "./home/Home";
+import Introduction from "./home/Introduction";
 
 const AppViews = props => {
     const isAuthenticated = () => sessionStorage.getItem("user") !== null
@@ -26,7 +28,7 @@ const AppViews = props => {
 
     return (
         <>
-            <Route exact path="/" render={props => <NavBar hasUser={hasUser} />} />
+            <Route exact path="/" render={props => <> <NavBar hasUser={hasUser} /> {hasUser ? <Home {...props} /> : <Introduction {...props} />} </>} />
             <Route exact path="/signup" render={props => <Login isNew={true} setUser={setUser} {...props} />} />
             <Route exact path="/login" render={props => <Login isNew={false} setUser={setUser} {...props} />} />
             <Route exact path="/labit" render={props => <> <NavBar hasUser={hasUser} /> <LabIt {...props} toggleSuccess={toggleSuccess} hasSuccessWindow={hasSuccessWindow} /> </>} />
