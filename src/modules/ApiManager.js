@@ -13,6 +13,10 @@ export default {
         return fetch(`${url}/${arrName}?${prop}=${val}`)
             .then(result => result.json())
     },
+    getAndExpand(arrName, id, expand) {
+        return fetch(`${url}/${arrName}/${id}?_expand=${expand}`)
+            .then(result => result.json())
+    },
     post(arrName, object) {
         return fetch(`${url}/${arrName}`, {
             method: "POST",

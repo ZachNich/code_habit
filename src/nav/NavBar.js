@@ -46,9 +46,9 @@ const NavBar = props => {
                     </li>}
                     {props.hasUser ?
                     <li>
-                    {props.history.location.pathname === '/profile'
+                    {props.history.location.pathname.includes('/profile')
                         ? <span className="nav_current">Profile</span>
-                        : <Link className="nav_link" to="/profile">Profile</Link>}
+                        : <Link className="nav_link" to={`/profile/${JSON.parse(sessionStorage.user).username}`}>Profile</Link>}
                     </li>
                     : null}
                 </div>
