@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ReactCodeJar } from 'react-codejar';
+import {withLineNumbers} from 'codejar/linenumbers';
 import Prism from 'prismjs';
-import 'prismjs/themes/prism-tomorrow.css';
+import 'prismjs/themes/prism-xonokai.css';
 import problemTests from '../helpers/problemTests';
 import ApiManager from '../modules/ApiManager';
 import getRandomIndex from '../helpers/getRandomIndex';
@@ -86,15 +87,18 @@ const Coder = props => {
 
     return (
         <>
-            <h3>Code Here</h3>
+            <h3>Your Solution</h3>
             <ReactCodeJar
+                className="editor"
                 code={code} // Initial code value
                 onUpdate={setCode} // Update the text
-                highlight={highlight} // Highlight function, receive the editor
+                highlight={withLineNumbers(highlight)} // Highlight function, receive the editor
             />
-            {props.isReview ? <button type="button" onClick={stallReview}>Stall It</button>
-            : <button type="button" onClick={skipNewProblem}>Skip It</button>}
-            <button type="button" onClick={testSubmission}>Ship It</button>
+            <div className="btn_container">
+                {props.isReview ? <button type="button" className="skip_btn" onClick={stallReview}>Stall It</button>
+                : <button type="button" className="skip_btn" onClick={skipNewProblem}>Skip It</button>}
+                <button type="button"  className="ship_btn" onClick={testSubmission}>Ship It</button>
+            </div>
         </>
     )
 }

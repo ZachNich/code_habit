@@ -11,3 +11,36 @@
     flex: 0 0 55%;
     padding: 1.5em;
 }
+
+.codejar-wrap {
+    background-color: #1e1e3f;
+    color: #a9b7c6;
+    height: 170px;
+    width: 500px;
+}
+
+.codejar-wrap > div:nth-child(2) {
+    resize: unset !important;
+    height: 170px;
+}
+
+.btn_container {
+    width: 500px;
+    padding-top: 3px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.skip_btn, .ship_btn {
+    all: unset;
+    text-transform: uppercase;
+    background-color: #e71d36;
+    font-family: monospace;
+    font-size: 14px;
+    color: #fdfffc;
+    padding: 4px;
+    border-radius: 4px;
+    margin: 0 0 0 3px;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.6);
+    box-shadow: inset 0 3px 3px -3px #be182c, inset 0 -3px 3px -3px #be182c;
+}

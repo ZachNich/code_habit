@@ -7,7 +7,7 @@ const Problem = props => {
 
     return (
         <>
-            <h3>Here's a problem:</h3>
+            <h3>Our Problem</h3>
             <p>{description}</p>
         </>
     )
