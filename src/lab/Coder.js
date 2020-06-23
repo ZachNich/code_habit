@@ -87,7 +87,7 @@ const Coder = props => {
 
     return (
         <>
-            <h3>Your Solution</h3>
+            <h3 className="lab_header">Your Solution</h3>
             <ReactCodeJar
                 className="editor"
                 code={code} // Initial code value

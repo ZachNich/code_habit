@@ -6,10 +6,10 @@ const Problem = props => {
     useEffect(() => setDescription(props.problem.description), [props.problem])
 
     return (
-        <>
-            <h3>Our Problem</h3>
+        <div className="problem_container">
+            <h3 className="lab_header">Our Problem</h3>
             <p>{description}</p>
-        </>
+        </div>
     )
 }
 

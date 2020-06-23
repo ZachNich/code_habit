@@ -5,6 +5,7 @@
 .left-side {
     flex: auto;
     padding: 1.5em;
+    min-width: 220px;
 }
 
 .right-side {
@@ -12,11 +13,23 @@
     padding: 1.5em;
 }
 
+.lab_header {
+    margin-block-start: .5em;
+    margin-block-end: 0;
+    padding: .5em;
+    background-color: #011627;
+    color: #fdfffc;
+}
+
+.problem_container {
+    height: 240.5px;
+}
+
 .codejar-wrap {
     background-color: #1e1e3f;
     color: #a9b7c6;
     height: 170px;
-    width: 500px;
+    min-width: 400px;
 }
 
 .codejar-wrap > div:nth-child(2) {
@@ -25,7 +38,7 @@
 }
 
 .btn_container {
-    width: 500px;
+    min-width: 400px;
     padding-top: 3px;
     display: flex;
     justify-content: flex-end;
