@@ -31,6 +31,7 @@ const Coder = props => {
                 const index = unsolvedProblems.findIndex(object => object.id === props.problem.id)
                 unsolvedProblems.splice(index, 1)
                 if (unsolvedProblems.length > 0) {
+                    props.setResult('Ship your code to see the result!')
                     props.setProblem(getRandomIndex(unsolvedProblems))
                 } else {
                     window.alert('Good work! No new problems left. Let\'s take you home.')
@@ -45,6 +46,7 @@ const Coder = props => {
         if (props.reviews.length > 1) {
             const reviewsCopy = [...props.reviews]
             reviewsCopy.splice(index, 1)
+            props.setResult('Ship your code to see the result!')
             props.setProblem(getRandomIndex(reviewsCopy))
         } else if (props.reviews.length === 1) {
             window.alert('This is the only review left! No putting this one off, champ.')
