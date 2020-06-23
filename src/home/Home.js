@@ -13,7 +13,6 @@ const Home = props => {
             .then(solutions => {
                 let recent = {solveDate: "12/12/9999, 12:12:12 PM"}
                 for (let i = 0; i < solutions.length; i++) {
-                    console.log(solutions[i])
                     if (Date.parse(solutions[i].solveDate) < Date.parse(recent.solveDate)) {
                         recent = solutions[i]
                     }

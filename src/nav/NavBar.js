@@ -10,7 +10,9 @@ const NavBar = props => {
             <ul className="nav_container">
                 <div className="nav_leftside">
                     <li>
-                        <Link className="nav_link logo" to="/">Logo</Link>
+                    {props.history.location.pathname === '/'
+                        ? <span className="nav_current logo">Home</span>
+                        : <Link className="nav_link logo" to="/">Home</Link>}
                     </li>
                     {props.hasUser ?
                     <li>

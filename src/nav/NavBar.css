@@ -1,11 +1,23 @@
+ul {
+    margin: unset;
+}
+
 .nav_container {
     display: flex;
     justify-content: space-between;
     list-style: none;
-    padding-left: 1.2em;
+    padding: 1.2em;
+    background-color: #011627;
 }
 
 .nav_link {
+    color: #fdfffc;
+    text-decoration: none;
+    padding: 0 .5em 0 .5em;
+}
+
+.nav_current {
+    color: #ff9f1c;
     text-decoration: none;
     padding: 0 .5em 0 .5em;
 }
@@ -14,7 +26,6 @@
     display: flex;
     justify-content: space-evenly;
     flex: 0 0 content;
-
 }
 
 .nav_rightside {
