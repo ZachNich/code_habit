@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import ApiManager from '../modules/ApiManager';
-
+import avatar from '../media/avatar1.png';
+import './Profile.css';
 
 const Profile = props => {
     const [problemsSolved, setProblemsSolved] = useState(0)
@@ -50,10 +51,10 @@ const Profile = props => {
     let showProblem = true;
     const showSolution = e => {
         if (showProblem) {
-            e.target.textContent = `Most Recent Solution: ${hardestSolution}`
+            e.target.innerHTML = `Most Recent Solution: <br> ${hardestSolution}`
             showProblem = false
         } else {
-            e.target.textContent = `Problem Rated Hardest: ${hardestProblem}`
+            e.target.innerHTML = `Problem Rated Hardest: <br> ${hardestProblem}`
             showProblem = true
         }
     }
@@ -63,7 +64,6 @@ const Profile = props => {
         ApiManager.getByProperty('userSolutions', 'profileId', userId)
             .then(data => {
                 for (let i = 0; i < data.length; i++) {
-                    console.log(data[i].solveDate.split(',')[0])
                     if (data.findIndex(solution => solution.solveDate.split(',')[0] === data[i].solveDate.split(',')[0]) === i) {
                         count++
                     }
@@ -83,7 +83,7 @@ const Profile = props => {
         <div className="profile_container">
             <div className="profile_banner">
                 <div className="banner_leftside">
-                    <div className="profile_avatar">Avatar</div>
+                    <img src={avatar} className="profile_avatar" />
                 </div>
                 <div className="banner_rightside">
                     <p className="profile_username">{username}</p>
@@ -91,12 +91,14 @@ const Profile = props => {
                     <p className="profile_memberSince">{`Member since ${joinDate}`}</p> 
                 </div>
             </div>
-            <div className="profile_stats">
-                <p className="profile_hardestProblem" onClick={showSolution}>Problem Rated Hardest: {hardestProblem}</p>
-                <p className="profile_totalDaysStudied">Days Studied: {daysStudied}</p>
-                <p className="profile_fastestSolution"></p>
+            <div className="profile_bottom">
+                <div className="profile_stats">
+                    <p className="profile_hardestProblem" onClick={showSolution}>Problem Rated Hardest: <br/>{hardestProblem}</p>
+                    <p className="profile_totalDaysStudied">Days Studied: {daysStudied}</p>
+                    <p className="profile_fastestSolution"></p>
+                </div>
+                <div className="profile_graphs">Graphs</div>
             </div>
-            <div className="profile_graphs">Graphs</div>
         </div>
     )
 }

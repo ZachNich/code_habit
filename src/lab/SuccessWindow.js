@@ -37,7 +37,6 @@ const SuccessWindow = props => {
                         const dontReviews = solutions.filter(solution => Date.parse(solution.nextEncounterDate) > Date.parse(new Date()))
                         const filteredReviews = dueReviews.filter(solution => !dontReviews.some(sol => solution.problemId === sol.problemId))
                         const reviewProblems = problems.filter(problem => filteredReviews.some(solution => solution.problemId === problem.id))
-                        console.log(reviewProblems)
                         props.setReviews(reviewProblems)
                     })
                 })
