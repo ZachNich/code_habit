@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import ApiManager from '../modules/ApiManager';
+import './SuccessWindow.css';
+import closeBtn from '../media/close_btn.svg';
 
 const SuccessWindow = props => {
     const [solutionsView, setSolutionsView] = useState([])
@@ -52,26 +54,31 @@ const SuccessWindow = props => {
     }
     
     return (
-        <div className="success_container">
-            <div className="success_message">
-                <p>{`Success! Great job.`}</p>
-            </div>
-            <div className="success_difficulty">
-                <p>How hard was this problem for you?</p>
-                <div onChange={handleRadioDifficulty}>
-                    <input type="radio" value="1" id="difficulty-1" name="difficulty-select" />Way Beneath Me
-                    <input type="radio" value="2" id="difficulty-2" name="difficulty-select" />Easy Enough
-                    <input type="radio" value="3" id="difficulty-3" name="difficulty-select" />Around My Level
-                    <input type="radio" value="4" id="difficulty-4" name="difficulty-select" />Had Some Difficulty
-                    <input type="radio" value="5" id="difficulty-5" name="difficulty-select" />I Don't Know How I Did It
+        <div className="success_container modal">
+            <div className="modal_content">
+                <img className="close_btn" src={closeBtn} onClick={props.toggleSuccess}></img>
+                <div className="success_message">
+                    <p className="success">Success! </p><p className="greatjob">Great job.</p>
+                </div>
+                <div className="success_difficulty">
+                    <p className="howhard">How hard was this problem for you?</p>
+                    <div onChange={handleRadioDifficulty}>
+                        <input type="radio" value="5" id="difficulty-5" className="difficulty_select" name="difficulty-select" />Easy
+                        <input type="radio" value="4" id="difficulty-4" className="difficulty_select" name="difficulty-select" />Not Bad
+                        <input type="radio" value="3" id="difficulty-3" className="difficulty_select" name="difficulty-select" />Doable
+                        <input type="radio" value="2" id="difficulty-2" className="difficulty_select" name="difficulty-select" />Tough
+                        <input type="radio" value="1" id="difficulty-1" className="difficulty_select" name="difficulty-select" />Very Hard
+                    </div>
+                </div>
+                <div className="success_solutions">
+                    <p className="solution_btn" onClick={expandSolutions}>View Solutions</p>
+                    <p className="solution_view">{solutionsView.map(solution => solution.description)}</p>
+                </div>
+                <div className="btn_container">
+                    <button className="home_btn" onClick={goHome}>Home</button>
+                    {props.isReview ? <button className="next_btn" onClick={nextReview}>Continue</button> : <button className="next_btn" onClick={nextProblem}>Continue</button>}
                 </div>
             </div>
-            <div className="success_solutions">
-                <p onClick={expandSolutions}>View Solutions</p>
-                <p>{solutionsView.map(solution => solution.description)}</p>
-            </div>
-            <button onClick={goHome}>Home</button>
-            {props.isReview ? <button onClick={nextReview}>Continue</button> : <button onClick={nextProblem}>Continue</button>}
         </div>
     )
 }
