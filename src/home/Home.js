@@ -45,16 +45,18 @@ const Home = props => {
     return (
         <div className="home_container">
             <div className="home_leftside">
-                <h4 className="home_header">Most Recent Solution: </h4>
-                <p className="home_content">{recentSolution.description}</p>
-                <h4 className="home_header">Preview Upcoming Problems: </h4>
-                <div className="home_content home_upcomingProblems">{upcomingProblems.map(problem => <p key={problem.id}>{problem.description}</p>)}</div>
+                <h4 className="home_header">Most Recent Solution</h4>
+                <p className="home_content home_recentSolution">{recentSolution.description}</p>
+                <h4 className="home_header">Preview Upcoming Problems</h4>
+                <div className="home_content home_upcomingProblems">{upcomingProblems.map(problem => <p key={problem.id} className="home_problem">{problem.description}</p>)}</div>
             </div>
             <div className="home_rightside">
-                <aside className="home_content home_quote">"Habits stay with you even when you don't have the motivation." <p className="quote_author">— Neeraj Agnihotri</p></aside>
+                <aside className="home_quote">"Habits stay with you even when you don't have the motivation." <p className="quote_author">— Neeraj Agnihotri</p></aside>
                 <button type="button" className="study_btn" onClick={() => {props.history.push('/labit')}}>Start Studying!</button>
-                <p>Have a question or issue? Let us know!</p>
-                <img src={mascot} className="home_mascot"></img>
+                <p className="home_support">Have a question or issue? Let us know!</p>
+                <div className="img_container">
+                    <img src={mascot} className="home_mascot"></img>
+                </div>
             </div>
         </div>
     )
