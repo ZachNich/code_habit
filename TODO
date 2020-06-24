@@ -1,0 +1,6 @@
+Joe Notes:
+
+Include associated problem with most recent solution on logged in home page.
+Add UX clarity to modal 'continue' button to tell user their solution was saved.
+Add all past user solutions to the profile page so the user can view their past work and progress.
+Increase visibility of tests failed notification on habit/labit page.

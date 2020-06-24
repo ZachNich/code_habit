@@ -1,0 +1,43 @@
+.intro_container {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 3em 12em 3em 12em;
+}
+
+.intro_video {
+
+}
+
+.intro_panel {
+    height: calc(100vh - 60px);
+}
+
+.quote_container {
+    display: flex;
+}
+
+.intro_quote {
+    color: #011627;
+    border-radius: 8px;
+    font-size: large;
+    font-weight: bold;
+    padding: 3em;
+    flex: 0 0 20%;
+    height: fit-content;
+}
+
+.quote_author {
+    text-align: right;
+    color: #ff9f1c
+}
+
+.mascot_container {
+    overflow: hidden;
+}
+
+.mascot {
+    display: block;
+    margin: 0 auto 0 auto;
+    max-height: 50%;
+    max-width: 50%;
+}
