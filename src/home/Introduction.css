@@ -1,0 +1,111 @@
+.video_container {
+    position: relative;
+}
+
+.intro_video {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    object-fit: cover;
+}
+
+.intro_container {
+    position: absolute;
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 3em 10em 3em 10em;
+}
+
+.intro_panel {
+    height: 90vh;
+}
+
+.quote_container {
+    padding-top: 3em;
+    display: flex;
+}
+
+.intro_quote {
+    color: #fdfffc;
+    border-radius: 8px;
+    font-size: large;
+    font-weight: bold;
+    padding: 3em;
+    flex: 0 0 20%;
+    height: fit-content;
+}
+
+.intro_quote_author {
+    text-align: right;
+    color: #ff9f1c
+}
+
+.intro_header {
+    color: #2ec4b6;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.6);
+    font-size: 22px;
+}
+
+.intro_features {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+
+.feature_card {
+    flex: 0 0 45%;
+}
+
+.feature_title {
+    color: #ff9f1c;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.6);
+}
+
+.feature_description {
+    color: #fdfffc;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.6);
+}
+
+.mascot_container {
+    overflow: hidden;
+}
+
+.mascot {
+    display: block;
+    margin: 0 auto 0 auto;
+    max-height: 50%;
+    max-width: 50%;
+}
+
+.call_to_action {
+    text-align: center;
+}
+
+.intro_ready {
+    font-size: 22px;
+    font-weight: bold;
+    color: #fdfffc;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.6);
+}
+
+.hop_to_it {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff9f1c;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.8);
+    padding-bottom: .3em;
+}
+
+.intro_btn {
+    all: unset;
+    text-transform: uppercase;
+    background-color: #e71d36;
+    font-family: monospace;
+    font-size: 15px;
+    color: #fdfffc;
+    padding: 8px;
+    border-radius: 4px;
+    margin: 0 4px 0 4px;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.6);
+    box-shadow: inset 0 3px 3px -3px #be182c, inset 0 -3px 3px -3px #be182c;
+}

@@ -10,6 +10,19 @@ ul {
     background-color: #011627;
 }
 
+.nav_container_intro {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    justify-content: space-between;
+    list-style: none;
+    padding: 1.2em;
+    background-color: #011627;
+}
+
 .nav_link {
     color: #fdfffc;
     text-decoration: none;

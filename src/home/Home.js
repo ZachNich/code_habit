@@ -51,7 +51,7 @@ const Home = props => {
                 <div className="home_content home_upcomingProblems">{upcomingProblems.map(problem => <p key={problem.id} className="home_problem">{problem.description}</p>)}</div>
             </div>
             <div className="home_rightside">
-                <aside className="home_quote">"Habits stay with you even when you don't have the motivation." <p className="quote_author">— Neeraj Agnihotri</p></aside>
+                <aside className="home_quote">"Habits stay with you even when you don't have the motivation." <p className="home_quote_author">— Neeraj Agnihotri</p></aside>
                 <button type="button" className="study_btn" onClick={() => {props.history.push('/labit')}}>Start Studying!</button>
                 <p className="home_support">Have a question or issue? Let us know!</p>
                 <div className="img_container">
