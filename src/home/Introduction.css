@@ -13,7 +13,7 @@
     position: absolute;
     display: flex;
     flex-flow: column nowrap;
-    margin: 3em 12em 3em 12em;
+    margin: 3em 10em 3em 10em;
 }
 
 .intro_panel {
@@ -21,11 +21,12 @@
 }
 
 .quote_container {
+    padding-top: 3em;
     display: flex;
 }
 
 .intro_quote {
-    color: #011627;
+    color: #fdfffc;
     border-radius: 8px;
     font-size: large;
     font-weight: bold;
@@ -37,6 +38,31 @@
 .intro_quote_author {
     text-align: right;
     color: #ff9f1c
+}
+
+.intro_header {
+    color: #2ec4b6;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.6);
+}
+
+.intro_features {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+
+.feature_card {
+    flex: 0 0 45%;
+}
+
+.feature_title {
+    color: #ff9f1c;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.6);
+}
+
+.feature_description {
+    color: #fdfffc;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.6);
 }
 
 .mascot_container {

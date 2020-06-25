@@ -23,7 +23,7 @@ const Introduction = props => {
                     <div className="intro_quote">"Habits stay with you even when you don't have the motivation." <p className="intro_quote_author">— Neeraj Agnihotri</p></div>
                 </div>
                 <div className="intro_panel">
-                    <h3>What's up with Code Habit?</h3>
+                    <h3 className="intro_header">What's up with Code Habit?</h3>
                     <div className="intro_features">
                         {features.map(feature => <FeatureCard key={feature.id} feature={feature} />)}
                     </div>
