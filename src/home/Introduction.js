@@ -32,9 +32,9 @@ const Introduction = props => {
                     <div className="mascot_container">
                         <img className="mascot" src={mascot}></img>
                     </div>
-                    <p>Ready to pick up the habit? Try Code Habit for free.</p>
-                    <button type="button" onClick={() => {props.history.push('/signup')}}>Start</button>
-                    <Link to="/login">Sign In</Link>
+                    <p className="intro_ready">Ready to pick up the habit? Try Code Habit for free.</p>
+                    <button type="button" className="intro_button" onClick={() => {props.history.push('/signup')}}>Sign Up</button>
+                    <button type="button" className="intro_button" onClick={() => {props.history.push('/login')}}>Sign In</button>
                 </div>
             </div>
         </div>
