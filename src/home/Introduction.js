@@ -28,13 +28,14 @@ const Introduction = props => {
                         {features.map(feature => <FeatureCard key={feature.id} feature={feature} />)}
                     </div>
                 </div>
-                <div className="intro_panel">
+                <div className="intro_panel call_to_action">
                     <div className="mascot_container">
                         <img className="mascot" src={mascot}></img>
                     </div>
-                    <p className="intro_ready">Ready to pick up the habit? Try Code Habit for free.</p>
-                    <button type="button" className="intro_button" onClick={() => {props.history.push('/signup')}}>Sign Up</button>
-                    <button type="button" className="intro_button" onClick={() => {props.history.push('/login')}}>Sign In</button>
+                    <p className="intro_ready">Ready to pick up the habit?</p>
+                    <p className="hop_to_it">Hop to it and try Code Habit for free.</p>
+                    <button type="button" className="intro_btn" onClick={() => {props.history.push('/signup')}}>Sign Up</button>
+                    <button type="button" className="intro_btn" onClick={() => {props.history.push('/login')}}>Sign In</button>
                 </div>
             </div>
         </div>

@@ -17,7 +17,7 @@
 }
 
 .intro_panel {
-    height: 100vh;
+    height: 90vh;
 }
 
 .quote_container {
@@ -43,6 +43,7 @@
 .intro_header {
     color: #2ec4b6;
     text-shadow: 0 1px 0 rgba(0,0,0,0.6);
+    font-size: 22px;
 }
 
 .intro_features {
@@ -74,4 +75,37 @@
     margin: 0 auto 0 auto;
     max-height: 50%;
     max-width: 50%;
+}
+
+.call_to_action {
+    text-align: center;
+}
+
+.intro_ready {
+    font-size: 22px;
+    font-weight: bold;
+    color: #fdfffc;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.6);
+}
+
+.hop_to_it {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff9f1c;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.8);
+    padding-bottom: .3em;
+}
+
+.intro_btn {
+    all: unset;
+    text-transform: uppercase;
+    background-color: #e71d36;
+    font-family: monospace;
+    font-size: 15px;
+    color: #fdfffc;
+    padding: 8px;
+    border-radius: 4px;
+    margin: 0 4px 0 4px;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.6);
+    box-shadow: inset 0 3px 3px -3px #be182c, inset 0 -3px 3px -3px #be182c;
 }
