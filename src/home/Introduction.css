@@ -1,15 +1,23 @@
+.video_container {
+    position: relative;
+}
+
+.intro_video {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    object-fit: cover;
+}
+
 .intro_container {
+    position: absolute;
     display: flex;
     flex-flow: column nowrap;
     margin: 3em 12em 3em 12em;
 }
 
-.intro_video {
-
-}
-
 .intro_panel {
-    height: calc(100vh - 60px);
+    height: 100vh;
 }
 
 .quote_container {
@@ -26,7 +34,7 @@
     height: fit-content;
 }
 
-.quote_author {
+.intro_quote_author {
     text-align: right;
     color: #ff9f1c
 }

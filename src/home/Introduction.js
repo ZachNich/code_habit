@@ -3,7 +3,7 @@ import FeatureCard from './FeatureCard';
 import mascot from '../media/mascot1.png';
 import { Link } from 'react-router-dom';
 import './Introduction.css';
-import background from '../media/mtn_bg_vid.mov';
+import background from '../media/bg_bunny.mp4';
 
 const Introduction = props => {
     const features = [
@@ -14,26 +14,28 @@ const Introduction = props => {
     ]
 
     return (
-        <div className="intro_container">
-            <video className="intro_video" autoPlay="autoplay" loop="loop">
-                <source src={background} type="video/mov" />
+        <div className="video_container">
+            <video className="intro_video" autoPlay="autoplay" loop="loop" muted>
+                <source src={background} type="video/mp4" />
             </video>
-            <div className="intro_panel quote_container">
-                <div className="intro_quote">"Habits stay with you even when you don't have the motivation." <p className="quote_author">— Neeraj Agnihotri</p></div>
-            </div>
-            <div className="intro_panel">
-                <h3>What's up with Code Habit?</h3>
-                <div className="intro_features">
-                    {features.map(feature => <FeatureCard key={feature.id} feature={feature} />)}
+            <div className="intro_container">
+                <div className="intro_panel quote_container">
+                    <div className="intro_quote">"Habits stay with you even when you don't have the motivation." <p className="intro_quote_author">— Neeraj Agnihotri</p></div>
                 </div>
-            </div>
-            <div className="intro_panel">
-                <div className="mascot_container">
-                    <img className="mascot" src={mascot}></img>
+                <div className="intro_panel">
+                    <h3>What's up with Code Habit?</h3>
+                    <div className="intro_features">
+                        {features.map(feature => <FeatureCard key={feature.id} feature={feature} />)}
+                    </div>
                 </div>
-                <p>Ready to pick up the habit? Try Code Habit for free.</p>
-                <button type="button" onClick={() => {props.history.push('/signup')}}>Start</button>
-                <Link to="/login">Sign In</Link>
+                <div className="intro_panel">
+                    <div className="mascot_container">
+                        <img className="mascot" src={mascot}></img>
+                    </div>
+                    <p>Ready to pick up the habit? Try Code Habit for free.</p>
+                    <button type="button" onClick={() => {props.history.push('/signup')}}>Start</button>
+                    <Link to="/login">Sign In</Link>
+                </div>
             </div>
         </div>
     )

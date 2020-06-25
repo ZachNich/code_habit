@@ -7,7 +7,7 @@ const NavBar = props => {
     
     return (
         <nav>
-            <ul className="nav_container">
+            <ul className={props.hasUser ? "nav_container" : "nav_container_intro"}>
                 <div className="nav_leftside">
                     <li>
                     {props.history.location.pathname === '/'
