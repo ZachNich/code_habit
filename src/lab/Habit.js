@@ -15,7 +15,7 @@ const Habit = props => {
     const [problem, setProblem] = useState({id: null, setup: '', description: '', testSuite: '', level: null});
     const [solve, setSolve] = useState(
         {
-            profileId: JSON.parse(sessionStorage.user),
+            profileId: JSON.parse(sessionStorage.user).id,
             problemId: null, 
             difficultyAssessed: null, 
             timeTaken: 0, 

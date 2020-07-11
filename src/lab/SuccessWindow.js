@@ -76,7 +76,7 @@ const SuccessWindow = props => {
                 </div>
                 <div className="btn_container">
                     <button className="home_btn" onClick={goHome}>Home</button>
-                    {props.isReview ? <button className="next_btn" onClick={nextReview}>Continue</button> : <button className="next_btn" onClick={nextProblem}>Continue</button>}
+                    {props.isReview ? <button className="next_btn" onClick={nextReview}>Save & Continue</button> : <button className="next_btn" onClick={nextProblem}>Save & Continue</button>}
                 </div>
             </div>
         </div>
