@@ -42,16 +42,19 @@ const Habit = props => {
     }, [reviews])
 
     const activate = e => {
-        setClicked(!clicked)
+        setClicked(true);
+        setTimeout(function() {
+            setClicked(false);
+        }, 2000);
     }
 
     return (
-        <div className="main-container">
-            <div className="left-side">
+        <div className="main_container">
+            <div className="left_side">
                 <Problem problem={problem} />
                 <Resources problem={problem} />
             </div>
-            <div className="right-side">
+            <div className="right_side">
                 <Coder problem={problem} setProblem={setProblem} reviews={reviews} setReviews={setReviews} setResult={setResult} result={result} setSolve={setSolve} solve={solve} activate={activate} isReview={true} {...props} />
                 <TestResults result={result} clicked={clicked} />
             </div>
