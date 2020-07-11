@@ -75,6 +75,10 @@
     box-shadow: inset 0 3px 3px -3px #be182c, inset 0 -3px 3px -3px #be182c;
 }
 
+.skip_btn:hover, .ship_btn:hover {
+    cursor: pointer;
+}
+
 .lab_result {
     background-color: #fdfffc;
     transition: all 1000ms linear;

@@ -1,11 +1,10 @@
-CURRENT:        Add clarity as to what "lab it" and "habit" actually are (new problems and reviews)
+CURRENT:        
 
 IN PROGRESS:    Include associated problem with most recent solution on logged in home page.
                 ** Done, but need to link the PROBLEM TITLE to the Profile page where user can view the problem and solution on the profile page.
 
 TO DO:          Add all past user solutions to the profile page so the user can view their past work and progress.
                 Add tutorial to new user experience
-                Separate 'preview upcoming problems' into 'upcoming problems' and 'upcoming reviews'
 
 ISSUES:         Some solutions are not accepted, mostly arrays (need to accept any array order?)
                 Profile page design
