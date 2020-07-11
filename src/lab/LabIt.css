@@ -1,3 +1,16 @@
+.lab_header--main {
+    background-image: linear-gradient(to right, #011627, #fdfffc);
+    color: #fdfffc;
+    text-transform: uppercase;
+    font-family: monospace;
+    text-shadow: 0 1.1px 0 rgba(0,0,0,0.6);
+    padding: .5em 1em .5em .75em;
+    margin-left: 1em;
+    margin-block-end: 0;
+    margin-block-start: 1em;
+    width: 30%;
+}
+
 .main_container {
     display: flex;
 }
@@ -64,9 +77,7 @@
 
 .lab_result {
     background-color: #fdfffc;
-    -webkit-transition: background-color 1000ms linear;
-    -ms-transition: background-color 1000ms linear;
-    transition: background-color 1000ms linear;
+    transition: all 1000ms linear;
 }
 
 .lab_result_blink {

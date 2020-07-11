@@ -46,17 +46,20 @@ const Lab = props => {
     }
 
     return (
-        <div className="main_container">
-            <div className="left_side">
-                <Problem problem={problem} />
-                <Resources problem={problem} />
+        <>
+            <h1 className="lab_header--main">New Problems</h1>
+            <div className="main_container">
+                <div className="left_side">
+                    <Problem problem={problem} />
+                    <Resources problem={problem} />
+                </div>
+                <div className="right_side">
+                    <Coder problem={problem} setProblem={setProblem} problems={problems} setProblems={setProblems} setResult={setResult} result={result} setSolve={setSolve} solve={solve} activate={activate} isReview={false} {...props} />
+                    <TestResults result={result} clicked={clicked} />
+                </div>
+                {props.hasSuccessWindow ? createPortal(<SuccessWindow problem={problem} setResult={setResult} setProblems={setProblems} setSolve={setSolve} solve={solve} toggleSuccess={props.toggleSuccess} isReview={false} {...props}/>, document.getElementById('modal')) : null}
             </div>
-            <div className="right_side">
-                <Coder problem={problem} setProblem={setProblem} problems={problems} setProblems={setProblems} setResult={setResult} result={result} setSolve={setSolve} solve={solve} activate={activate} isReview={false} {...props} />
-                <TestResults result={result} clicked={clicked} />
-            </div>
-            {props.hasSuccessWindow ? createPortal(<SuccessWindow problem={problem} setResult={setResult} setProblems={setProblems} setSolve={setSolve} solve={solve} toggleSuccess={props.toggleSuccess} isReview={false} {...props}/>, document.getElementById('modal')) : null}
-        </div>
+        </>
     )
 }
 

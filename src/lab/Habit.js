@@ -49,17 +49,20 @@ const Habit = props => {
     }
 
     return (
-        <div className="main_container">
-            <div className="left_side">
-                <Problem problem={problem} />
-                <Resources problem={problem} />
+        <>
+            <h1 className="lab_header--main">Reviews</h1>
+            <div className="main_container">
+                <div className="left_side">
+                    <Problem problem={problem} />
+                    <Resources problem={problem} />
+                </div>
+                <div className="right_side">
+                    <Coder problem={problem} setProblem={setProblem} reviews={reviews} setReviews={setReviews} setResult={setResult} result={result} setSolve={setSolve} solve={solve} activate={activate} isReview={true} {...props} />
+                    <TestResults result={result} clicked={clicked} />
+                </div>
+                {props.hasSuccessWindow ? createPortal(<SuccessWindow problem={problem} setReviews={setReviews} setResult={setResult} setSolve={setSolve} solve={solve} toggleSuccess={props.toggleSuccess} isReview={true} {...props} />, document.getElementById('modal')) : null}
             </div>
-            <div className="right_side">
-                <Coder problem={problem} setProblem={setProblem} reviews={reviews} setReviews={setReviews} setResult={setResult} result={result} setSolve={setSolve} solve={solve} activate={activate} isReview={true} {...props} />
-                <TestResults result={result} clicked={clicked} />
-            </div>
-            {props.hasSuccessWindow ? createPortal(<SuccessWindow problem={problem} setReviews={setReviews} setResult={setResult} setSolve={setSolve} solve={solve} toggleSuccess={props.toggleSuccess} isReview={true} {...props} />, document.getElementById('modal')) : null}
-        </div>
+        </>
     )
 }
 

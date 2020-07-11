@@ -1,11 +1,9 @@
-CURRENT:        Increase visibility of tests failed notification on habit/labit page.
+CURRENT:        Add clarity as to what "lab it" and "habit" actually are (new problems and reviews)
 
 IN PROGRESS:    Include associated problem with most recent solution on logged in home page.
                 ** Done, but need to link the PROBLEM TITLE to the Profile page where user can view the problem and solution on the profile page.
 
-
 TO DO:          Add all past user solutions to the profile page so the user can view their past work and progress.
-                Add clarity as to what "lab it" and "habit" actually are (new problems and reviews)
                 Add tutorial to new user experience
                 Separate 'preview upcoming problems' into 'upcoming problems' and 'upcoming reviews'
 
