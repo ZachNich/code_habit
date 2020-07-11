@@ -1,14 +1,14 @@
-.main-container {
+.main_container {
     display: flex;
 }
 
-.left-side {
+.left_side {
     flex: auto;
     padding: 1.5em;
     min-width: 220px;
 }
 
-.right-side {
+.right_side {
     flex: 0 0 55%;
     padding: 1.5em;
 }
@@ -19,6 +19,10 @@
     padding: .5em;
     background-color: #011627;
     color: #fdfffc;
+}
+
+.main_container p {
+    padding: .2em;
 }
 
 .problem_container {
@@ -56,4 +60,16 @@
     margin: 0 0 0 3px;
     text-shadow: 0 1px 0 rgba(0,0,0,0.6);
     box-shadow: inset 0 3px 3px -3px #be182c, inset 0 -3px 3px -3px #be182c;
+}
+
+.lab_result {
+    background-color: #fdfffc;
+    -webkit-transition: background-color 1000ms linear;
+    -ms-transition: background-color 1000ms linear;
+    transition: background-color 1000ms linear;
+}
+
+.lab_result_blink {
+    background-color: #e71d36;
+    color: #fdfffc;
 }

@@ -23,6 +23,7 @@ const Habit = props => {
             solveDate: null, 
             nextEncounterDate: null
         })
+    const [clicked, setClicked] = useState(false);
 
     useEffect(() => {
         ApiManager.getAll('userSolutions').then(solutions => {
@@ -40,6 +41,10 @@ const Habit = props => {
         setProblem(getRandomIndex(reviews))
     }, [reviews])
 
+    const activate = e => {
+        setClicked(!clicked)
+    }
+
     return (
         <div className="main-container">
             <div className="left-side">
@@ -47,8 +52,8 @@ const Habit = props => {
                 <Resources problem={problem} />
             </div>
             <div className="right-side">
-                <Coder problem={problem} setProblem={setProblem} reviews={reviews} setReviews={setReviews} setResult={setResult} setSolve={setSolve} solve={solve} isReview={true} {...props} />
-                <TestResults result={result} />
+                <Coder problem={problem} setProblem={setProblem} reviews={reviews} setReviews={setReviews} setResult={setResult} result={result} setSolve={setSolve} solve={solve} activate={activate} isReview={true} {...props} />
+                <TestResults result={result} clicked={clicked} />
             </div>
             {props.hasSuccessWindow ? createPortal(<SuccessWindow problem={problem} setReviews={setReviews} setResult={setResult} setSolve={setSolve} solve={solve} toggleSuccess={props.toggleSuccess} isReview={true} {...props} />, document.getElementById('modal')) : null}
         </div>

@@ -23,6 +23,7 @@ const Lab = props => {
             solveDate: null, 
             nextEncounterDate: null
         })
+    const [clicked, setClicked] = useState(false);
 
     useEffect(() => {
         ApiManager.getAll('userSolutions').then(solutions => {
@@ -37,15 +38,22 @@ const Lab = props => {
         setProblem(getRandomIndex(problems))
     }, [problems])
 
+    const activate = e => {
+        setClicked(true);
+        setTimeout(function() {
+            setClicked(false);
+        }, 2000);
+    }
+
     return (
-        <div className="main-container">
-            <div className="left-side">
+        <div className="main_container">
+            <div className="left_side">
                 <Problem problem={problem} />
                 <Resources problem={problem} />
             </div>
-            <div className="right-side">
-                <Coder problem={problem} setProblem={setProblem} problems={problems} setProblems={setProblems} setResult={setResult} setSolve={setSolve} solve={solve} isReview={false} {...props} />
-                <TestResults result={result} />
+            <div className="right_side">
+                <Coder problem={problem} setProblem={setProblem} problems={problems} setProblems={setProblems} setResult={setResult} result={result} setSolve={setSolve} solve={solve} activate={activate} isReview={false} {...props} />
+                <TestResults result={result} clicked={clicked} />
             </div>
             {props.hasSuccessWindow ? createPortal(<SuccessWindow problem={problem} setResult={setResult} setProblems={setProblems} setSolve={setSolve} solve={solve} toggleSuccess={props.toggleSuccess} isReview={false} {...props}/>, document.getElementById('modal')) : null}
         </div>
