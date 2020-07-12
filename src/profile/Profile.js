@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import ApiManager from '../modules/ApiManager';
 import avatar from '../media/avatar1.png';
-import './Profile.css';
+import { Line, Radar, Doughnut } from 'react-chartjs-2';
+import './Profile.css'; 
 
 const Profile = props => {
     const [problemsSolved, setProblemsSolved] = useState(0)
@@ -79,11 +80,28 @@ const Profile = props => {
         findHardestProblem()
     }, [])
 
+    const lineGraph = {datasets: [{
+        data: [1, 2, 3, 5, 7, 8, 10, 23],
+        label: "Test Dataset"
+    }],
+        labels: ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"]
+    }
+
+    const radarGraph = {datasets: [{
+        data: [2, 1, 0, 5, 4, 4, 0],
+        label: "Test Dataset"
+    }],
+        labels: ["Arrays", "Loops", "Strings", "Recursion", "Objects", "Regex", "Math"]
+    }
+
+
+    const doughnutGraph = [1, 2, 6, 10, 15]
+
     return (
         <div className="profile_container">
             <div className="profile_banner">
                 <div className="banner_leftside">
-                    <img src={avatar} className="profile_avatar" />
+                    <img src={avatar} className="profile_avatar" alt="avatar" />
                 </div>
                 <div className="banner_rightside">
                     <p className="profile_username">{username}</p>
@@ -93,11 +111,17 @@ const Profile = props => {
             </div>
             <div className="profile_bottom">
                 <div className="profile_stats">
+                    <h3 className="profile_header">Stats</h3>
                     <p className="profile_hardestProblem" onClick={showSolution}>Problem Rated Hardest: <br/>{hardestProblem}</p>
                     <p className="profile_totalDaysStudied">Days Studied: {daysStudied}</p>
                     <p className="profile_fastestSolution"></p>
                 </div>
-                <div className="profile_graphs">Graphs</div>
+                <div className="profile_graphs">
+                    <h3 className="profile_header">Graphs</h3>
+                    <Line data={lineGraph} options={{showLines: true}} />
+                    <Radar data={radarGraph} />
+                    <Doughnut data={doughnutGraph} />
+                </div>
             </div>
         </div>
     )

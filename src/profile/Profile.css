@@ -2,32 +2,19 @@ p {
     margin: unset;
 }
 
-body, html {
-    height: 100%;
-    width: 100%;
-}
-
 .profile_container {
     display: flex;
     flex-flow: column nowrap;
-    background-color: #011627;
+    background-color: #fdfffc;
 }
 
 .profile_banner {
-    height: 8.2em;
     display: flex;
-    background-color: #e71d36;
-    box-shadow: inset 0 15px 15px -15px #7a101c, inset 0 -15px 15px -15px #7a101c;
-}
-
-.banner_leftside {
-    flex: auto;
-    align-content: center;
-}
-
-.banner_rightside {
-    flex: 1 1 90%;
-    padding: 2.2em 0 2.2em 0;
+    background-image: linear-gradient(to right, #e71d36 40%,#fdfffc 80%);
+    box-shadow: -1.4px 1.4px 0px 0px rgba(0,0,0,0.5);
+    width: 60%;
+    margin: 2em auto 0 auto;
+    border-radius: 10px;
 }
 
 .profile_avatar {
@@ -43,14 +30,20 @@ body, html {
 }
 
 .profile_bottom {
-    min-height: calc(100vh - 8.2em - 60px);
     display: flex;
-    flex-flow: row nowrap;
-    flex: auto;
 }
+
+.profile_header {
+    margin-block-start: .5em;
+    margin-block-end: 0;
+    padding: .5em;
+    background-color: #011627;
+    color: #fdfffc;
+}
+
 .profile_stats {
     flex: 0 0 50%;
-    color: #fdfffc;
+    color: #011627;
     padding: 1em;
 }
 
@@ -61,5 +54,5 @@ body, html {
 .profile_graphs {
     flex: auto;
     padding: 1em;
-    color: #fdfffc;
+    color: #011627;
 }
