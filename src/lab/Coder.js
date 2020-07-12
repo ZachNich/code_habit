@@ -99,7 +99,7 @@ const Coder = props => {
             <div className="btn_container">
                 {props.isReview ? <button type="button" className="skip_btn" onClick={stallReview}>Stall It</button>
                 : <button type="button" className="skip_btn" onClick={skipNewProblem}>Skip It</button>}
-                <button type="button"  className="ship_btn" onClick={testSubmission}>Ship It</button>
+                <button type="button"  className="ship_btn" onClick={() => {testSubmission(); props.activate();}}>Ship It</button>
             </div>
         </>
     )

@@ -1,14 +1,27 @@
-.main-container {
+.lab_header--main {
+    background-image: linear-gradient(to right, #011627, #fdfffc);
+    color: #fdfffc;
+    text-transform: uppercase;
+    font-family: monospace;
+    text-shadow: 0 1.1px 0 rgba(0,0,0,0.6);
+    padding: .5em 1em .5em .75em;
+    margin-left: 1em;
+    margin-block-end: 0;
+    margin-block-start: 1em;
+    width: 30%;
+}
+
+.main_container {
     display: flex;
 }
 
-.left-side {
+.left_side {
     flex: auto;
     padding: 1.5em;
     min-width: 220px;
 }
 
-.right-side {
+.right_side {
     flex: 0 0 55%;
     padding: 1.5em;
 }
@@ -19,6 +32,10 @@
     padding: .5em;
     background-color: #011627;
     color: #fdfffc;
+}
+
+.main_container p {
+    padding: .2em;
 }
 
 .problem_container {
@@ -56,4 +73,18 @@
     margin: 0 0 0 3px;
     text-shadow: 0 1px 0 rgba(0,0,0,0.6);
     box-shadow: inset 0 3px 3px -3px #be182c, inset 0 -3px 3px -3px #be182c;
+}
+
+.skip_btn:hover, .ship_btn:hover {
+    cursor: pointer;
+}
+
+.lab_result {
+    background-color: #fdfffc;
+    transition: all 1000ms linear;
+}
+
+.lab_result_blink {
+    background-color: #e71d36;
+    color: #fdfffc;
 }

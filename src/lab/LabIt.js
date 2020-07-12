@@ -15,7 +15,7 @@ const Lab = props => {
     const [problem, setProblem] = useState({id: null, setup: '', description: '', testSuite: '', level: null});
     const [solve, setSolve] = useState(
         {
-            profileId: JSON.parse(sessionStorage.user),
+            profileId: JSON.parse(sessionStorage.user).id,
             problemId: null, 
             difficultyAssessed: null, 
             timeTaken: 0, 
@@ -23,6 +23,7 @@ const Lab = props => {
             solveDate: null, 
             nextEncounterDate: null
         })
+    const [clicked, setClicked] = useState(false);
 
     useEffect(() => {
         ApiManager.getAll('userSolutions').then(solutions => {
@@ -37,18 +38,28 @@ const Lab = props => {
         setProblem(getRandomIndex(problems))
     }, [problems])
 
+    const activate = e => {
+        setClicked(true);
+        setTimeout(function() {
+            setClicked(false);
+        }, 2000);
+    }
+
     return (
-        <div className="main-container">
-            <div className="left-side">
-                <Problem problem={problem} />
-                <Resources problem={problem} />
+        <>
+            <h1 className="lab_header--main">New Problems</h1>
+            <div className="main_container">
+                <div className="left_side">
+                    <Problem problem={problem} />
+                    <Resources problem={problem} />
+                </div>
+                <div className="right_side">
+                    <Coder problem={problem} setProblem={setProblem} problems={problems} setProblems={setProblems} setResult={setResult} result={result} setSolve={setSolve} solve={solve} activate={activate} isReview={false} {...props} />
+                    <TestResults result={result} clicked={clicked} />
+                </div>
+                {props.hasSuccessWindow ? createPortal(<SuccessWindow problem={problem} setResult={setResult} setProblems={setProblems} setSolve={setSolve} solve={solve} toggleSuccess={props.toggleSuccess} isReview={false} {...props}/>, document.getElementById('modal')) : null}
             </div>
-            <div className="right-side">
-                <Coder problem={problem} setProblem={setProblem} problems={problems} setProblems={setProblems} setResult={setResult} setSolve={setSolve} solve={solve} isReview={false} {...props} />
-                <TestResults result={result} />
-            </div>
-            {props.hasSuccessWindow ? createPortal(<SuccessWindow problem={problem} setResult={setResult} setProblems={setProblems} setSolve={setSolve} solve={solve} toggleSuccess={props.toggleSuccess} isReview={false} {...props}/>, document.getElementById('modal')) : null}
-        </div>
+        </>
     )
 }
 
