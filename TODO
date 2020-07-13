@@ -1,7 +1,6 @@
-CURRENT:        Radar graph of skills acquired (tags from completed problems)
-                Add all past user solutions to the profile page so the user can view their past work and progress.
+CURRENT:        Add all past user solutions to the profile page so the user can view their past work and progress.
                 Add graphs to Profile page using Chart.js
-                    ** Line graph = days studied, Doughnut graph = solved problems, unsolved problems, reviews, Radar graph = Tags solved
+                    ** Line graph = days studied, Doughnut graph = solved problems, unsolved problems, reviews
 
 IN PROGRESS:    Include associated problem with most recent solution on logged in home page.
                 ** Done, but need to link the PROBLEM TITLE to the Profile page where user can view the problem and solution on the profile page.

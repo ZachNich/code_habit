@@ -11,6 +11,7 @@ const Profile = props => {
     const [hardestProblem, setHardestProblem] = useState("")
     const [hardestSolution, setHardestSolution] = useState("")
     const [radarGraph, setRadarGraph] = useState({})
+    const [showGraph, setShowGraph] = useState('Proficiency')
 
     const username = JSON.parse(sessionStorage.user).username
     const userId = JSON.parse(sessionStorage.user).id
@@ -44,21 +45,9 @@ const Profile = props => {
                 }
                 ApiManager.getAndExpand('userSolutions', data[hardest].id, 'problem')
                     .then(solution => {
-                        setHardestProblem(solution.problem.description)
-                        setHardestSolution(solution.description)
+                        setHardestProblem(solution.problem)
                     })
             })
-    }
-
-    let showProblem = true;
-    const showSolution = e => {
-        if (showProblem) {
-            e.target.innerHTML = `Most Recent Solution: <br> ${hardestSolution}`
-            showProblem = false
-        } else {
-            e.target.innerHTML = `Problem Rated Hardest: <br> ${hardestProblem}`
-            showProblem = true
-        }
     }
 
     const countDaysStudied = () => {
@@ -74,14 +63,7 @@ const Profile = props => {
             })
     }
 
-    useEffect(() => {
-        countSolvedProblems()
-        countDaysStudied()
-        getJoinDate()
-        findHardestProblem()
-        makeRadarGraph()
-    }, [])
-
+    
     const lineGraph = {datasets: [{
         data: [1, 2, 3, 5, 7, 8, 10, 23],
         label: "Test Dataset"
@@ -99,33 +81,52 @@ const Profile = props => {
                     tagCount[tag.name] = 0
                 })
                 ApiManager.getByProperty('userSolutions', 'profileId', userId)
-                    .then(solutions => {
-                        const problemIds = solutions.map(solution => solution.problemId)
-                        ApiManager.getAllAndExpand('problemsTags', 'tag')
-                            .then(problemsTags => {
-                                const matchedTags = problemsTags.filter(problemTag => problemIds.includes(problemTag.problemId))
-                                for (let i = 0; i < matchedTags.length; i++) {
-                                    tagCount[matchedTags[i].tag.name] = tagCount[matchedTags[i].tag.name] + 1
-                                }
-                                const tagCountArr = Object.entries(tagCount).sort((a, b) => b[0].localeCompare(a[0]))
-                                const data = []
-                                for (let i = 0; i < tagCountArr.length; i++) {
-                                    data.push(tagCountArr[i][1])
-                                }
-                                labels.sort()
-                                const radar = {
-                                    datasets: [{
-                                        data: data,
-                                        label: "Proficiencies"
-                                    }],
-                                    labels: labels
-                                }
-                                setRadarGraph(radar);
-                            })
+                .then(solutions => {
+                    const problemIds = solutions.map(solution => solution.problemId)
+                    ApiManager.getAllAndExpand('problemsTags', 'tag')
+                    .then(problemsTags => {
+                        const matchedTags = problemsTags.filter(problemTag => problemIds.includes(problemTag.problemId))
+                        for (let i = 0; i < matchedTags.length; i++) {
+                            tagCount[matchedTags[i].tag.name] = tagCount[matchedTags[i].tag.name] + 1
+                        }
+                        const tagCountArr = Object.entries(tagCount).sort((a, b) => b[0].localeCompare(a[0]))
+                        const data = []
+                        for (let i = 0; i < tagCountArr.length; i++) {
+                            data.push(tagCountArr[i][1])
+                        }
+                        labels.sort()
+                        const radar = {
+                            datasets: [{
+                                data: data,
+                                label: "Proficiencies"
+                            }],
+                            labels: labels
+                        }
+                        setRadarGraph(radar);
                     })
-
+                })
+                
             })
+        }
+
+    const toggleShowGraph = e => {
+        if (e.target.textContent === "Proficiency") {
+            setShowGraph("Proficiency")
+        } else if (e.target.textContent === "Progress") {
+            setShowGraph("Progress")
+        } else {
+            setShowGraph("Consistency")
+        }
     }
+        
+    useEffect(() => {
+        countSolvedProblems()
+        countDaysStudied()
+        getJoinDate()
+        findHardestProblem()
+        makeRadarGraph()
+    }, [])
+
 
     return (
         <div className="profile_container">
@@ -141,15 +142,22 @@ const Profile = props => {
             </div>
             <div className="profile_bottom">
                 <div className="profile_stats">
-                    <h3 className="profile_header">Stats</h3>
-                    <p className="profile_hardestProblem" onClick={showSolution}>Problem Rated Hardest: <br/>{hardestProblem}</p>
-                    <p className="profile_totalDaysStudied">Days Studied: {daysStudied}</p>
-                    <p className="profile_fastestSolution"></p>
+                    <h3 className="profile_header">Quick Stats</h3>
+                    <p className="stats_block">Days Studied: {daysStudied}</p>
+                    <p className="stats_block">Problems Solved: {problemsSolved}</p>
+                    <p className="stats_block">Reviews Burned: 0</p>
+                    <p className="stats_block">Quickest Solve: 400 seconds</p>
+                    <p className="stats_block">Slowest Solve: 4 hours 44 minutes 44 seconds</p>
+                    <p className="stats_block">Rated Hardest: {hardestProblem.title}</p>
                 </div>
                 <div className="profile_graphs">
-                    <h3 className="profile_header">Graphs</h3>
-                    <Line data={lineGraph} options={{showLines: true}} />
-                    <Radar data={radarGraph} />
+                    <h3 className="profile_header graphs_header">
+                        <p onClick={showGraph === "Proficiency" ? null : toggleShowGraph} className={showGraph === "Proficiency" ? "graph_title--active" : "graph_title"}>Proficiency</p>
+                        <p onClick={showGraph === "Progress" ? null : toggleShowGraph} className={showGraph === "Progress" ? "graph_title--active" : "graph_title"}>Progress</p>
+                        <p onClick={showGraph === "Consistency" ? null : toggleShowGraph} className={showGraph === "Consistency" ? "graph_title--active" : "graph_title"}>Consistency</p>
+                    </h3>
+                    {showGraph === "Consistency" ? <Line data={lineGraph} options={{showLines: true}} /> : null}
+                    {showGraph === "Proficiency" ? <Radar data={radarGraph} /> : null}
                 </div>
             </div>
         </div>
