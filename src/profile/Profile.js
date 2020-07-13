@@ -10,6 +10,7 @@ const Profile = props => {
     const [joinDate, setJoinDate] = useState("")
     const [hardestProblem, setHardestProblem] = useState("")
     const [hardestSolution, setHardestSolution] = useState("")
+    const [radarGraph, setRadarGraph] = useState({})
 
     const username = JSON.parse(sessionStorage.user).username
     const userId = JSON.parse(sessionStorage.user).id
@@ -78,6 +79,7 @@ const Profile = props => {
         countDaysStudied()
         getJoinDate()
         findHardestProblem()
+        makeRadarGraph()
     }, [])
 
     const lineGraph = {datasets: [{
@@ -87,15 +89,43 @@ const Profile = props => {
         labels: ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"]
     }
 
-    const radarGraph = {datasets: [{
-        data: [2, 1, 0, 5, 4, 4, 0],
-        label: "Test Dataset"
-    }],
-        labels: ["Arrays", "Loops", "Strings", "Recursion", "Objects", "Regex", "Math"]
+    const makeRadarGraph = () => {
+        const labels = []
+        let tagCount = {}
+        ApiManager.getAll('tags')
+            .then(tags => {
+                tags.forEach(tag => {
+                    labels.push(tag.name)
+                    tagCount[tag.name] = 0
+                })
+                ApiManager.getByProperty('userSolutions', 'profileId', userId)
+                    .then(solutions => {
+                        const problemIds = solutions.map(solution => solution.problemId)
+                        ApiManager.getAllAndExpand('problemsTags', 'tag')
+                            .then(problemsTags => {
+                                const matchedTags = problemsTags.filter(problemTag => problemIds.includes(problemTag.problemId))
+                                for (let i = 0; i < matchedTags.length; i++) {
+                                    tagCount[matchedTags[i].tag.name] = tagCount[matchedTags[i].tag.name] + 1
+                                }
+                                const tagCountArr = Object.entries(tagCount).sort((a, b) => b[0].localeCompare(a[0]))
+                                const data = []
+                                for (let i = 0; i < tagCountArr.length; i++) {
+                                    data.push(tagCountArr[i][1])
+                                }
+                                labels.sort()
+                                const radar = {
+                                    datasets: [{
+                                        data: data,
+                                        label: "Proficiencies"
+                                    }],
+                                    labels: labels
+                                }
+                                setRadarGraph(radar);
+                            })
+                    })
+
+            })
     }
-
-
-    const doughnutGraph = [1, 2, 6, 10, 15]
 
     return (
         <div className="profile_container">
@@ -120,7 +150,6 @@ const Profile = props => {
                     <h3 className="profile_header">Graphs</h3>
                     <Line data={lineGraph} options={{showLines: true}} />
                     <Radar data={radarGraph} />
-                    <Doughnut data={doughnutGraph} />
                 </div>
             </div>
         </div>
