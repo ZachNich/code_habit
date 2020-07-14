@@ -9,8 +9,8 @@ const Profile = props => {
     const [daysStudied, setDaysStudied] = useState(0)
     const [joinDate, setJoinDate] = useState("")
     const [hardestProblem, setHardestProblem] = useState("")
-    const [hardestSolution, setHardestSolution] = useState("")
     const [radarGraph, setRadarGraph] = useState({})
+    const [donutGraph, setDonutGraph] = useState({})
     const [showGraph, setShowGraph] = useState('Proficiency')
 
     const username = JSON.parse(sessionStorage.user).username
@@ -107,7 +107,32 @@ const Profile = props => {
                 })
                 
             })
-        }
+    }
+
+    const makeDonutGraph = () => {
+        const labels = ["New Problems", "Reviews", "Burned Reviews"]
+        const backgroundColor = ["#2ec4b6", "#e71d36", "#011627"]
+        let data = [0, 0, 0]
+        ApiManager.getAll('userSolutions').then(solutions => {
+            ApiManager.getAll('problems').then(problems => {
+                const unsolvedProblems = problems.filter(problem => !solutions.some(solution => solution.problemId === problem.id))
+                data[0] = unsolvedProblems.length
+                const reviews = solutions.filter(solution => solution.nextEncounterDate !== 0)
+                data[1] = reviews.length
+                const burned = solutions.filter(solution => solution.nextEncounterDate === 0)
+                data[2] = burned.length
+            })
+            const donut = {
+                datasets :[{
+                    backgroundColor,
+                    data,
+                    hoverBackgroundColor: backgroundColor
+                }],
+                labels
+            }
+            setDonutGraph(donut)
+        })
+    }
 
     const toggleShowGraph = e => {
         if (e.target.textContent === "Proficiency") {
@@ -125,6 +150,7 @@ const Profile = props => {
         getJoinDate()
         findHardestProblem()
         makeRadarGraph()
+        makeDonutGraph()
     }, [])
 
 
@@ -156,8 +182,9 @@ const Profile = props => {
                         <p onClick={showGraph === "Progress" ? null : toggleShowGraph} className={showGraph === "Progress" ? "graph_title--active" : "graph_title"}>Progress</p>
                         <p onClick={showGraph === "Consistency" ? null : toggleShowGraph} className={showGraph === "Consistency" ? "graph_title--active" : "graph_title"}>Consistency</p>
                     </h3>
-                    {showGraph === "Consistency" ? <Line data={lineGraph} options={{showLines: true}} /> : null}
                     {showGraph === "Proficiency" ? <Radar data={radarGraph} /> : null}
+                    {showGraph === "Progress" ? <Doughnut data={donutGraph} /> : null}
+                    {showGraph === "Consistency" ? <Line data={lineGraph} options={{showLines: true}} /> : null}
                 </div>
             </div>
         </div>

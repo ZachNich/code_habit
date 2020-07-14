@@ -12,7 +12,7 @@ p {
     display: flex;
     background-image: linear-gradient(to right, #e71d36 40%,#fdfffc 80%);
     box-shadow: -1.4px 1.4px 0px 0px rgba(0,0,0,0.5);
-    width: 60%;
+    min-width: 60%;
     margin: 1.5em auto 0 auto;
     border-radius: 10px;
 }
