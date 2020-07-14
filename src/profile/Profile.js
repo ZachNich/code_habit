@@ -97,6 +97,8 @@ const Profile = props => {
                         labels.sort()
                         const radar = {
                             datasets: [{
+                                backgroundColor: "rgba(46, 196, 182, .4)",
+                                borderColor: "#15AB9D",
                                 data: data,
                                 label: "Proficiencies"
                             }],
@@ -182,7 +184,9 @@ const Profile = props => {
                         <p onClick={showGraph === "Progress" ? null : toggleShowGraph} className={showGraph === "Progress" ? "graph_title--active" : "graph_title"}>Progress</p>
                         <p onClick={showGraph === "Consistency" ? null : toggleShowGraph} className={showGraph === "Consistency" ? "graph_title--active" : "graph_title"}>Consistency</p>
                     </h3>
-                    {showGraph === "Proficiency" ? <Radar data={radarGraph} /> : null}
+                    {showGraph === "Proficiency" ? <Radar data={radarGraph} options={
+                        { scale: {angleLines: { display: true }, ticks: { suggestedMin: 0, suggestedMax: 6 } }}
+                    }/> : null}
                     {showGraph === "Progress" ? <Doughnut data={donutGraph} /> : null}
                     {showGraph === "Consistency" ? <Line data={lineGraph} options={{showLines: true}} /> : null}
                 </div>
