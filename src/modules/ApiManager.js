@@ -17,8 +17,8 @@ export default {
         return fetch(`${url}/${arrName}/${id}?_expand=${expand}`)
             .then(result => result.json())
     },
-    getByPropertyAndExpand(arrName, prop, val, expand) {
-        return fetch(`${url}/${arrName}?${prop}=${val}?_expand=${expand}`)
+    getAllAndExpand(arrName, expand) {
+        return fetch(`${url}/${arrName}?_expand=${expand}`)
             .then(result => result.json())
     },
     post(arrName, object) {

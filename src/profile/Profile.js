@@ -9,7 +9,9 @@ const Profile = props => {
     const [daysStudied, setDaysStudied] = useState(0)
     const [joinDate, setJoinDate] = useState("")
     const [hardestProblem, setHardestProblem] = useState("")
-    const [hardestSolution, setHardestSolution] = useState("")
+    const [radarGraph, setRadarGraph] = useState({})
+    const [donutGraph, setDonutGraph] = useState({})
+    const [showGraph, setShowGraph] = useState('Proficiency')
 
     const username = JSON.parse(sessionStorage.user).username
     const userId = JSON.parse(sessionStorage.user).id
@@ -43,21 +45,9 @@ const Profile = props => {
                 }
                 ApiManager.getAndExpand('userSolutions', data[hardest].id, 'problem')
                     .then(solution => {
-                        setHardestProblem(solution.problem.description)
-                        setHardestSolution(solution.description)
+                        setHardestProblem(solution.problem)
                     })
             })
-    }
-
-    let showProblem = true;
-    const showSolution = e => {
-        if (showProblem) {
-            e.target.innerHTML = `Most Recent Solution: <br> ${hardestSolution}`
-            showProblem = false
-        } else {
-            e.target.innerHTML = `Problem Rated Hardest: <br> ${hardestProblem}`
-            showProblem = true
-        }
     }
 
     const countDaysStudied = () => {
@@ -73,13 +63,7 @@ const Profile = props => {
             })
     }
 
-    useEffect(() => {
-        countSolvedProblems()
-        countDaysStudied()
-        getJoinDate()
-        findHardestProblem()
-    }, [])
-
+    
     const lineGraph = {datasets: [{
         data: [1, 2, 3, 5, 7, 8, 10, 23],
         label: "Test Dataset"
@@ -87,15 +71,90 @@ const Profile = props => {
         labels: ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"]
     }
 
-    const radarGraph = {datasets: [{
-        data: [2, 1, 0, 5, 4, 4, 0],
-        label: "Test Dataset"
-    }],
-        labels: ["Arrays", "Loops", "Strings", "Recursion", "Objects", "Regex", "Math"]
+    const makeRadarGraph = () => {
+        const labels = []
+        let tagCount = {}
+        ApiManager.getAll('tags')
+            .then(tags => {
+                tags.forEach(tag => {
+                    labels.push(tag.name)
+                    tagCount[tag.name] = 0
+                })
+                ApiManager.getByProperty('userSolutions', 'profileId', userId)
+                .then(solutions => {
+                    const problemIds = solutions.map(solution => solution.problemId)
+                    ApiManager.getAllAndExpand('problemsTags', 'tag')
+                    .then(problemsTags => {
+                        const matchedTags = problemsTags.filter(problemTag => problemIds.includes(problemTag.problemId))
+                        for (let i = 0; i < matchedTags.length; i++) {
+                            tagCount[matchedTags[i].tag.name] = tagCount[matchedTags[i].tag.name] + 1
+                        }
+                        const tagCountArr = Object.entries(tagCount).sort((a, b) => b[0].localeCompare(a[0]))
+                        const data = []
+                        for (let i = 0; i < tagCountArr.length; i++) {
+                            data.push(tagCountArr[i][1])
+                        }
+                        labels.sort()
+                        const radar = {
+                            datasets: [{
+                                backgroundColor: "rgba(46, 196, 182, .4)",
+                                borderColor: "#15AB9D",
+                                data: data,
+                                label: "Proficiencies"
+                            }],
+                            labels: labels
+                        }
+                        setRadarGraph(radar);
+                    })
+                })
+                
+            })
     }
 
+    const makeDonutGraph = () => {
+        const labels = ["New Problems", "Reviews", "Burned Reviews"]
+        const backgroundColor = ["#2ec4b6", "#e71d36", "#011627"]
+        let data = [0, 0, 0]
+        ApiManager.getAll('userSolutions').then(solutions => {
+            ApiManager.getAll('problems').then(problems => {
+                const unsolvedProblems = problems.filter(problem => !solutions.some(solution => solution.problemId === problem.id))
+                data[0] = unsolvedProblems.length
+                const reviews = solutions.filter(solution => solution.nextEncounterDate !== 0)
+                data[1] = reviews.length
+                const burned = solutions.filter(solution => solution.nextEncounterDate === 0)
+                data[2] = burned.length
+            })
+            const donut = {
+                datasets :[{
+                    backgroundColor,
+                    data,
+                    hoverBackgroundColor: backgroundColor
+                }],
+                labels
+            }
+            setDonutGraph(donut)
+        })
+    }
 
-    const doughnutGraph = [1, 2, 6, 10, 15]
+    const toggleShowGraph = e => {
+        if (e.target.textContent === "Proficiency") {
+            setShowGraph("Proficiency")
+        } else if (e.target.textContent === "Progress") {
+            setShowGraph("Progress")
+        } else {
+            setShowGraph("Consistency")
+        }
+    }
+        
+    useEffect(() => {
+        countSolvedProblems()
+        countDaysStudied()
+        getJoinDate()
+        findHardestProblem()
+        makeRadarGraph()
+        makeDonutGraph()
+    }, [])
+
 
     return (
         <div className="profile_container">
@@ -111,16 +170,25 @@ const Profile = props => {
             </div>
             <div className="profile_bottom">
                 <div className="profile_stats">
-                    <h3 className="profile_header">Stats</h3>
-                    <p className="profile_hardestProblem" onClick={showSolution}>Problem Rated Hardest: <br/>{hardestProblem}</p>
-                    <p className="profile_totalDaysStudied">Days Studied: {daysStudied}</p>
-                    <p className="profile_fastestSolution"></p>
+                    <h3 className="profile_header">Quick Stats</h3>
+                    <p className="stats_block">Days Studied: {daysStudied}</p>
+                    <p className="stats_block">Problems Solved: {problemsSolved}</p>
+                    <p className="stats_block">Reviews Burned: 0</p>
+                    <p className="stats_block">Quickest Solve: 400 seconds</p>
+                    <p className="stats_block">Slowest Solve: 4 hours 44 minutes 44 seconds</p>
+                    <p className="stats_block">Rated Hardest: {hardestProblem.title}</p>
                 </div>
                 <div className="profile_graphs">
-                    <h3 className="profile_header">Graphs</h3>
-                    <Line data={lineGraph} options={{showLines: true}} />
-                    <Radar data={radarGraph} />
-                    <Doughnut data={doughnutGraph} />
+                    <h3 className="profile_header graphs_header">
+                        <p onClick={showGraph === "Proficiency" ? null : toggleShowGraph} className={showGraph === "Proficiency" ? "graph_title--active" : "graph_title"}>Proficiency</p>
+                        <p onClick={showGraph === "Progress" ? null : toggleShowGraph} className={showGraph === "Progress" ? "graph_title--active" : "graph_title"}>Progress</p>
+                        <p onClick={showGraph === "Consistency" ? null : toggleShowGraph} className={showGraph === "Consistency" ? "graph_title--active" : "graph_title"}>Consistency</p>
+                    </h3>
+                    {showGraph === "Proficiency" ? <Radar data={radarGraph} options={
+                        { scale: {angleLines: { display: true }, ticks: { suggestedMin: 0, suggestedMax: 6 } }}
+                    }/> : null}
+                    {showGraph === "Progress" ? <Doughnut data={donutGraph} /> : null}
+                    {showGraph === "Consistency" ? <Line data={lineGraph} options={{showLines: true}} /> : null}
                 </div>
             </div>
         </div>
