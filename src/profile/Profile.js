@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import ApiManager from '../modules/ApiManager';
 import avatar from '../media/avatar1.png';
 import { Line, Radar, Doughnut } from 'react-chartjs-2';
+import SolutionCard from './SolutionCard';
 import './Profile.css'; 
 
 const Profile = props => {
@@ -12,6 +13,8 @@ const Profile = props => {
     const [radarGraph, setRadarGraph] = useState({})
     const [donutGraph, setDonutGraph] = useState({})
     const [showGraph, setShowGraph] = useState('Proficiency')
+    const [solutionsProblems, setSolutionsProblems] = useState([])
+    const [showStats, setShowStats] = useState(true)
 
     const username = JSON.parse(sessionStorage.user).username
     const userId = JSON.parse(sessionStorage.user).id
@@ -145,6 +148,26 @@ const Profile = props => {
             setShowGraph("Consistency")
         }
     }
+
+    const getSolutions = () => {
+        const solsAndProbs = []
+        ApiManager.getByProperty('userSolutions', 'profileId', userId)
+            .then(solutions => solutions.forEach(solution => {
+                ApiManager.get('problems', solution.problemId)
+                    .then(problem => {
+                        solsAndProbs.push([solution, problem])
+                        setSolutionsProblems(solsAndProbs)
+                    })
+            }))
+    }
+
+    const toggleShowStats = e => {
+        if (showStats) {
+            setShowStats(false)
+        } else {
+            setShowStats(true)
+        }
+    }
         
     useEffect(() => {
         countSolvedProblems()
@@ -153,8 +176,8 @@ const Profile = props => {
         findHardestProblem()
         makeRadarGraph()
         makeDonutGraph()
+        getSolutions()
     }, [])
-
 
     return (
         <div className="profile_container">
@@ -170,16 +193,26 @@ const Profile = props => {
             </div>
             <div className="profile_bottom">
                 <div className="profile_stats">
-                    <h3 className="profile_header">Quick Stats</h3>
-                    <p className="stats_block">Days Studied: {daysStudied}</p>
-                    <p className="stats_block">Problems Solved: {problemsSolved}</p>
-                    <p className="stats_block">Reviews Burned: 0</p>
-                    <p className="stats_block">Quickest Solve: 400 seconds</p>
-                    <p className="stats_block">Slowest Solve: 4 hours 44 minutes 44 seconds</p>
-                    <p className="stats_block">Rated Hardest: {hardestProblem.title}</p>
+                    <h3 className="profile_header">
+                        <p onClick={showStats ? null : toggleShowStats} className={showStats ? "graph_title--active" : "graph_title"}>Quick Stats</p>
+                        <p onClick={showStats ? toggleShowStats : null} className={showStats ? "graph_title" : "graph_title--active"}>Past Solutions</p>
+                    </h3>
+                    {showStats ?
+                    <>
+                        <p className="stats_block">Days Studied: {daysStudied}</p>
+                        <p className="stats_block">Problems Solved: {problemsSolved}</p>
+                        <p className="stats_block">Reviews Burned: 0</p>
+                        <p className="stats_block">Quickest Solve: 400 seconds</p>
+                        <p className="stats_block">Slowest Solve: 4 hours 44 minutes 44 seconds</p>
+                        <p className="stats_block">Rated Hardest: {hardestProblem.title}</p>
+                    </>
+                    :
+                    solutionsProblems.map(solutionProblem => 
+                        <SolutionCard solution={solutionProblem} />
+                    )}
                 </div>
                 <div className="profile_graphs">
-                    <h3 className="profile_header graphs_header">
+                    <h3 className="profile_header">
                         <p onClick={showGraph === "Proficiency" ? null : toggleShowGraph} className={showGraph === "Proficiency" ? "graph_title--active" : "graph_title"}>Proficiency</p>
                         <p onClick={showGraph === "Progress" ? null : toggleShowGraph} className={showGraph === "Progress" ? "graph_title--active" : "graph_title"}>Progress</p>
                         <p onClick={showGraph === "Consistency" ? null : toggleShowGraph} className={showGraph === "Consistency" ? "graph_title--active" : "graph_title"}>Consistency</p>

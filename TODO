@@ -1,6 +1,5 @@
 CURRENT:        Add all past user solutions to the profile page so the user can view their past work and progress.
-                Add graphs to Profile page using Chart.js
-                    ** Line graph = days studied, Doughnut graph = solved problems, unsolved problems, reviews
+                Code editor expands horizontally instead of scrolling
 
 IN PROGRESS:    Include associated problem with most recent solution on logged in home page.
                 ** Done, but need to link the PROBLEM TITLE to the Profile page where user can view the problem and solution on the profile page.
@@ -9,8 +8,6 @@ TO DO:          Add tutorial to new user experience
                 Style Sign In & Sign Up pages
                 Add learning resources to each problem
                 Add problem title to labit/habit pages
+                Finish graph/visualization for consistency on profile page (bar graph? Calendar?)
 
 ISSUES:         Some solutions are not accepted, mostly arrays (need to accept any array order?)
-                Profile page design
-                Profile page stats not updating dynamically
-                Code editor expands horizontally instead of scrolling
