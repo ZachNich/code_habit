@@ -24,6 +24,7 @@
 .right_side {
     flex: 0 0 55%;
     padding: 1.5em;
+    max-width: 55%;
 }
 
 .lab_header {

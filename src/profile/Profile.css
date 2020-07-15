@@ -39,9 +39,6 @@ p {
     padding: .5em;
     background-color: #011627;
     color: #fdfffc;
-}
-
-.graphs_header {
     display: flex;
     justify-content: space-around;
 }
@@ -62,10 +59,16 @@ p {
     flex: auto;
     color: #011627;
     padding: 1em;
+    max-width: 37%;
+    min-width: 256px;
 }
 
 .profile_stats > p {
     padding-bottom: .5em;
+}
+
+.problem_card {
+    word-break: break-all;
 }
 
 .stats_block {
@@ -78,4 +81,8 @@ p {
     flex: 0 0 55%;
     padding: 1em;
     color: #011627;
+}
+
+.profile_problem_title {
+    font-weight: 666;
 }
