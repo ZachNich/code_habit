@@ -67,7 +67,8 @@ p {
     padding-bottom: .5em;
 }
 
-.problem_card {
+.profile_solution_container {
+    white-space: pre-wrap;
     word-break: break-all;
 }
 

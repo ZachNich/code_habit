@@ -1,5 +1,4 @@
-CURRENT:        Add all past user solutions to the profile page so the user can view their past work and progress.
-                Code editor expands horizontally instead of scrolling
+CURRENT:        
 
 IN PROGRESS:    Include associated problem with most recent solution on logged in home page.
                 ** Done, but need to link the PROBLEM TITLE to the Profile page where user can view the problem and solution on the profile page.
