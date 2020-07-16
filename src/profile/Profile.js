@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import ApiManager from '../modules/ApiManager';
 import avatar from '../media/avatar1.png';
-import { Line, Radar, Doughnut } from 'react-chartjs-2';
+import { Radar, Doughnut } from 'react-chartjs-2';
+import { HeatMapGrid } from 'react-grid-heatmap';
 import SolutionCard from './SolutionCard';
 import './Profile.css'; 
 
@@ -66,13 +67,42 @@ const Profile = props => {
             })
     }
 
-    
-    const lineGraph = {datasets: [{
-        data: [1, 2, 3, 5, 7, 8, 10, 23],
-        label: "Test Dataset"
-    }],
-        labels: ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"]
-    }
+    /*
+
+        Need array of amount of days in the month (28 - 31), showing the number for each day
+        Need 7 columns
+        Need 4 - 5 rows (4 for 28 days, 5 for 29 - 31 days)
+    Get all userSolutions
+    Filter solutions to get only solutions solved in the chosen month (1 - 12)
+        Do this by finding the index of the first / and grabbing all characters before that, then compare those to the date.now() chars before first /
+    Loop over filtered solutions
+        find the number in array that equals solution.solveDate (chars between / and /) and make that green
+
+    */
+    // const makeHeatMap = () => {
+    //     const x = []
+    //     const y = []
+    //     const data = []
+
+    //     const fillArr = []
+    //     const month = Date.getMonth()
+    //     for (let i = 0; i < 28; i+=4) {
+    //         fillArr.push([i + 1, i + 2, i + 3, i + 4])
+    //     }
+    //     if (month === 1 && Date.getFullYear() % 4 === 0) {
+    //         fillArr.push([29])
+    //     } else if (month === 3 || month === 5 || month === 8 || month === 10) {
+    //         fillArr.push([29, 30])
+    //     } else {
+    //         fillArr.push([29, 30, 31])
+    //     }
+
+    //     ApiManager.getByProperty('userSolutions', 'profileId', userId)
+    //         .then(solutions => {
+    //             let thisMonthSolutions = solutions.filter(solution => parseInt(solution.solveDate.substring(0, solution.solveDate.indexOf('/'))) === month + 1)
+
+    //         })
+    // }
 
     const makeRadarGraph = () => {
         const labels = []
@@ -221,7 +251,7 @@ const Profile = props => {
                         { scale: {angleLines: { display: true }, ticks: { suggestedMin: 0, suggestedMax: 6 } }}
                     }/> : null}
                     {showGraph === "Progress" ? <Doughnut data={donutGraph} /> : null}
-                    {showGraph === "Consistency" ? <Line data={lineGraph} options={{showLines: true}} /> : null}
+                    {/* {showGraph === "Consistency" ? <HeatMapGrid data={heatMap} xLabels={xLabels} yLabels={yLabels} /> : null} */}
                 </div>
             </div>
         </div>
