@@ -9,9 +9,14 @@ const HeatMap = props => {
         i++
     }
 
-    console.log('OG data', props.data)
     return (
         <div className="profile_heatmap">
+            <div className="heatmap_key">
+                <div className="key_color_true"></div>
+                <div className="key_name_true">Studied</div>
+                <div className="key_color_false"></div>
+                <div className="key_name_false">Didn't study</div>
+            </div>
             {
                 props.data.map(data => {
                 incrementRow()

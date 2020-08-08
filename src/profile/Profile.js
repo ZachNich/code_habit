@@ -71,22 +71,22 @@ const Profile = props => {
     const makeHeatMap = () => {
         const fillArr = []
         const month = (new Date).getMonth()
-        for (let i = 0; i < 28; i+=4) {
-            fillArr.push([[i + 1], [i + 2], [i + 3], [i + 4]])
+        for (let i = 0; i < 28; i+=7) {
+            fillArr.push([i + 1, i + 2, i + 3, i + 4, i + 5, i + 6, i + 7])
         }
         if (month === 1 && Date.getFullYear() % 4 === 0) {
-            fillArr.push([[29]])
+            fillArr.push([29])
         } else if (month === 3 || month === 5 || month === 8 || month === 10) {
-            fillArr.push([[29], [30]])
+            fillArr.push([29, 30])
         } else {
-            fillArr.push([[29], [30], [31]])
+            fillArr.push([29, 30, 31])
         }
 
         ApiManager.getByProperty('userSolutions', 'profileId', userId)
             .then(solutions => {
                 let thisMonthSolutions = solutions.filter(solution => parseInt(solution.solveDate.substring(0, solution.solveDate.indexOf('/'))) == month + 1)
                 for (let i = 0; i < fillArr.length; i++) {
-                    for (let j = 0; j < 4; j++) {
+                    for (let j = 0; j < 7; j++) {
                         if (thisMonthSolutions.some(el => {
                             el.solveDate.substring(0, el.solveDate.indexOf('/')).contains(fillArr[i][j])
                         })) {

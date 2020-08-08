@@ -1,20 +1,52 @@
 .profile_heatmap {
-    display: flex;
-    justify-content: center;
-    padding: 1em;
-}
-
-.heatmap_row {
+    padding: .5em;
     display: flex;
     flex-flow: column nowrap;
 }
 
+.heatmap_key {
+    display: flex;
+    justify-content: center;
+    padding-bottom: .3em;
+}
+
+.key_color_true {
+    height: .6em;
+    width: 1.8em;
+    margin: 5px;
+    background-color: #2ec4b6;
+}
+
+.key_name_true {
+    font-size: 14px;
+    opacity: .7;
+    margin-right: .5em;
+}
+
+.key_color_false {
+    height: .6em;
+    width: 1.8em;
+    margin: 5px;
+    background-color: #e71d36;
+}
+
+.key_name_false {
+    font-size: 14px;
+    opacity: .7;
+}
+
+.heatmap_row {
+    margin: auto;
+    display: flex;
+    flex-flow: row nowrap;
+}
+
 .heatmap_square {
     text-align: center;
-    min-width: 1em;
-    min-height: 1em;
+    min-width: 1.5em;
+    min-height: 1.5em;
     padding: .4em;
-    margin: .5px;
+    margin: 2px;
 }
 
 .heatmap_row .n {
