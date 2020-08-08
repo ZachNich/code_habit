@@ -1,0 +1,28 @@
+.profile_heatmap {
+    display: flex;
+    justify-content: center;
+    padding: 1em;
+}
+
+.heatmap_row {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.heatmap_square {
+    text-align: center;
+    min-width: 1em;
+    min-height: 1em;
+    padding: .4em;
+    margin: .5px;
+}
+
+.heatmap_row .n {
+    color: #fdfffc;
+    background-color: #e71d36;
+}
+
+.heatmap_row .y {
+    color: #011627;
+    background-color: #2ec4b6;
+}
