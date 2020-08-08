@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import ApiManager from '../modules/ApiManager';
 import avatar from '../media/avatar1.png';
-import { Line, Radar, Doughnut } from 'react-chartjs-2';
+import { Radar, Doughnut } from 'react-chartjs-2';
+import HeatMap from './HeatMap';
 import SolutionCard from './SolutionCard';
 import './Profile.css'; 
 
@@ -12,6 +13,7 @@ const Profile = props => {
     const [hardestProblem, setHardestProblem] = useState("")
     const [radarGraph, setRadarGraph] = useState({})
     const [donutGraph, setDonutGraph] = useState({})
+    const [heatMap, setHeatMap] = useState([])
     const [showGraph, setShowGraph] = useState('Proficiency')
     const [solutionsProblems, setSolutionsProblems] = useState([])
     const [showStats, setShowStats] = useState(true)
@@ -66,12 +68,39 @@ const Profile = props => {
             })
     }
 
-    
-    const lineGraph = {datasets: [{
-        data: [1, 2, 3, 5, 7, 8, 10, 23],
-        label: "Test Dataset"
-    }],
-        labels: ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"]
+    const makeHeatMap = () => {
+        const fillArr = []
+        const month = (new Date).getMonth()
+        for (let i = 0; i < 28; i+=7) {
+            fillArr.push([i + 1, i + 2, i + 3, i + 4, i + 5, i + 6, i + 7])
+        }
+        if (month === 1 && Date.getFullYear() % 4 === 0) {
+            fillArr.push([29])
+        } else if (month === 3 || month === 5 || month === 8 || month === 10) {
+            fillArr.push([29, 30])
+        } else {
+            fillArr.push([29, 30, 31])
+        }
+
+        ApiManager.getByProperty('userSolutions', 'profileId', userId)
+            .then(solutions => {
+                let thisMonthSolutions = solutions.filter(solution => parseInt(solution.solveDate.substring(0, solution.solveDate.indexOf('/'))) == month + 1)
+                for (let i = 0; i < fillArr.length; i++) {
+                    for (let j = 0; j < 7; j++) {
+                        if (thisMonthSolutions.some(el => {
+                            el.solveDate.substring(0, el.solveDate.indexOf('/')).contains(fillArr[i][j])
+                        })) {
+                            fillArr[i][j] += '-y'
+                        } else if (fillArr[i][j]) {
+                            fillArr[i][j] += '-n'
+                        }
+                    }
+                }
+            })
+        const columns = fillArr.length
+        const rows = fillArr[0].length
+        const data = fillArr
+        setHeatMap(data)
     }
 
     const makeRadarGraph = () => {
@@ -176,6 +205,7 @@ const Profile = props => {
         findHardestProblem()
         makeRadarGraph()
         makeDonutGraph()
+        makeHeatMap()
         getSolutions()
     }, [])
 
@@ -221,7 +251,7 @@ const Profile = props => {
                         { scale: {angleLines: { display: true }, ticks: { suggestedMin: 0, suggestedMax: 6 } }}
                     }/> : null}
                     {showGraph === "Progress" ? <Doughnut data={donutGraph} /> : null}
-                    {showGraph === "Consistency" ? <Line data={lineGraph} options={{showLines: true}} /> : null}
+                    {showGraph === "Consistency" ? <HeatMap data={heatMap} /> : null}
                 </div>
             </div>
         </div>
