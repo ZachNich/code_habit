@@ -88,7 +88,7 @@ const Profile = props => {
                 for (let i = 0; i < fillArr.length; i++) {
                     for (let j = 0; j < 7; j++) {
                         if (thisMonthSolutions.some(el => {
-                            el.solveDate.substring(0, el.solveDate.indexOf('/')).contains(fillArr[i][j])
+                            el.solveDate.substring(0, el.solveDate.indexOf('/')).includes(fillArr[i][j])
                         })) {
                             fillArr[i][j] += '-y'
                         } else if (fillArr[i][j]) {

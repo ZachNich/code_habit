@@ -26,7 +26,7 @@ const Lab = props => {
         })
     const [clicked, setClicked] = useState(false);
     const [repetitions, setRepetitions] = useState(0);
-    const [prevInterval, setPrevInterval] = useState(1);
+    const [prevInterval, setPrevInterval] = useState(0);
 
     useEffect(() => {
         ApiManager.getByProperty('userSolutions', 'profileId', JSON.parse(sessionStorage.user).id).then(solutions => {
