@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ApiManager from '../modules/ApiManager';
 import './SuccessWindow.css';
 import closeBtn from '../media/close_btn.svg';
+import sm2 from '../helpers/sm2';
 
 const SuccessWindow = props => {
     const [solutionsView, setSolutionsView] = useState([])
@@ -19,7 +20,7 @@ const SuccessWindow = props => {
     const nextProblem = e => {
         ApiManager.post('userSolutions', props.solve)
             .then(() =>{
-                ApiManager.getAll('userSolutions').then(solutions => {
+                ApiManager.getByProperty('userSolutions', 'profileId', JSON.parse(sessionStorage.user).id).then(solutions => {
                     ApiManager.getAll('problems').then(problems => {
                         const unsolvedProblems = problems.filter(problem => !solutions.some(solution => solution.problemId === problem.id))
                         props.setProblems(unsolvedProblems)
@@ -33,7 +34,7 @@ const SuccessWindow = props => {
     const nextReview = e => {
         ApiManager.post('userSolutions', props.solve)
             .then(() =>{
-                ApiManager.getAll('userSolutions').then(solutions => {
+                ApiManager.getByProperty('userSolutions', 'profileId', JSON.parse(sessionStorage.user).id).then(solutions => {
                     ApiManager.getAll('problems').then(problems => {
                         const dueReviews = solutions.filter(solution => Date.parse(solution.nextEncounterDate) <= Date.parse(new Date()))
                         const dontReviews = solutions.filter(solution => Date.parse(solution.nextEncounterDate) > Date.parse(new Date()))
@@ -49,7 +50,13 @@ const SuccessWindow = props => {
 
     const handleRadioDifficulty = e => {
         const stateToChange = {...props.solve}
-        stateToChange.difficultyAssessed = parseInt(e.target.value)
+        stateToChange.quality = parseInt(e.target.value)
+        const intervalObj = sm2(stateToChange.quality, props.repetitions, stateToChange.easeFactor, props.prevInterval)
+        stateToChange.easeFactor = intervalObj.easeFactor
+        stateToChange.solveDate = new Date().toLocaleString('en-US')
+        let nextReview = new Date()
+        nextReview.setDate(nextReview.getDate() + intervalObj.interval)
+        stateToChange.nextEncounterDate = nextReview.toLocaleString('en-US')
         props.setSolve(stateToChange)
     }
     

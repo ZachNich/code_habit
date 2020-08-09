@@ -17,19 +17,23 @@ const Habit = props => {
         {
             profileId: JSON.parse(sessionStorage.user).id,
             problemId: null, 
-            difficultyAssessed: null, 
+            quality: null, 
+            easeFactor: null,
             timeTaken: 0, 
             description: "", 
             solveDate: null, 
             nextEncounterDate: null
         })
     const [clicked, setClicked] = useState(false);
+    const [repetitions, setRepetitions] = useState(0);
+    const [prevInterval, setPrevInterval] = useState(1);
 
     useEffect(() => {
-        ApiManager.getAll('userSolutions').then(solutions => {
+        ApiManager.getByProperty('userSolutions', 'profileId', JSON.parse(sessionStorage.user).id).then(solutions => {
             ApiManager.getAll('problems').then(problems => {
                 const dueReviews = solutions.filter(solution => Date.parse(solution.nextEncounterDate) <= Date.parse(new Date()))
                 const dontReviews = solutions.filter(solution => Date.parse(solution.nextEncounterDate) > Date.parse(new Date()))
+                console.log('due', dueReviews, 'dont', dontReviews)
                 const filteredReviews = dueReviews.filter(solution => !dontReviews.some(sol => solution.problemId === sol.problemId))
                 const reviewProblems = problems.filter(problem => filteredReviews.some(solution => solution.problemId === problem.id))
                 setReviews(reviewProblems)
@@ -57,10 +61,10 @@ const Habit = props => {
                     <Resources problem={problem} />
                 </div>
                 <div className="right_side">
-                    <Coder problem={problem} setProblem={setProblem} reviews={reviews} setReviews={setReviews} setResult={setResult} result={result} setSolve={setSolve} solve={solve} activate={activate} isReview={true} {...props} />
+                    <Coder problem={problem} setProblem={setProblem} reviews={reviews} setReviews={setReviews} setResult={setResult} result={result} setSolve={setSolve} solve={solve} setRepetitions={setRepetitions} setPrevInterval={setPrevInterval} activate={activate} isReview={true} {...props} />
                     <TestResults result={result} clicked={clicked} />
                 </div>
-                {props.hasSuccessWindow ? createPortal(<SuccessWindow problem={problem} setReviews={setReviews} setResult={setResult} setSolve={setSolve} solve={solve} toggleSuccess={props.toggleSuccess} isReview={true} {...props} />, document.getElementById('modal')) : null}
+                {props.hasSuccessWindow ? createPortal(<SuccessWindow problem={problem} setReviews={setReviews} setResult={setResult} setSolve={setSolve} solve={solve} repetitions={repetitions} prevInterval={prevInterval} toggleSuccess={props.toggleSuccess} isReview={true} {...props} />, document.getElementById('modal')) : null}
             </div>
         </>
     )

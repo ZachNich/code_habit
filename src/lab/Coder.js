@@ -20,12 +20,14 @@ const Coder = props => {
 
     useEffect(() => {
         setCode(props.problem.setup)
+        // ApiManager.getByProperty
+        // props.setRepetitions()
     }, [props.problem])
 
     // skips to next random unsolved problem, but does not return the current problem
     // TODO: needs to persist modified array of unsolved problems, otherwise skipped problems will come back in queue randomly
     const skipNewProblem = e => {
-        ApiManager.getAll('userSolutions').then(solutions => {
+        ApiManager.getByProperty('userSolutions', 'profileId', JSON.parse(sessionStorage.user).id).then(solutions => {
             ApiManager.getAll('problems').then(problems => {
                 const unsolvedProblems = problems.filter(problem => !solutions.some(solution => solution.problemId === problem.id))
                 const index = unsolvedProblems.findIndex(object => object.id === props.problem.id)
@@ -71,13 +73,10 @@ const Coder = props => {
             
                 if (problemTests[`problem${props.problem.id}`](testFunction)) { 
                     props.setResult('All tests passed. Good work!')
-                    const nextReview = new Date()
-                    nextReview.setDate(nextReview.getDate() + 1)
                     const solution = {...props.solve}
                     solution.problemId = props.problem.id
                     solution.description = strFunction
                     solution.solveDate = new Date().toLocaleString('en-US')
-                    solution.nextEncounterDate = nextReview.toLocaleString('en-US')
                     props.setSolve(solution)
                     props.toggleSuccess()
                 } else { 
