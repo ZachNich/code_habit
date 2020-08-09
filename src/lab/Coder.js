@@ -18,14 +18,28 @@ const Coder = props => {
         strFunction = editor.textContent;
     }
 
+    const getRepsAndInterval = () => {
+        ApiManager.getByProperty('userSolutions', 'profileId', JSON.parse(sessionStorage.user).id).then(solutions => {
+            const currentProbSols = solutions.filter(solution => solution.problemId === props.problem.id)
+            props.setRepetitions(currentProbSols.length)
+
+            let mostRecent = {solveDate: '1/1/1'}
+            for (let i = 0; i < currentProbSols.length; i++) {
+                if (currentProbSols[i].solveDate > mostRecent.solveDate) {
+                    mostRecent = currentProbSols[i]
+                }
+            }
+            const interval = (new Date(mostRecent.nextEncounterDate).getTime() - new Date(mostRecent.solveDate).getTime()) / (1000 * 60 * 60 * 24)
+            props.setPrevInterval(interval)
+        })
+    }
+
     useEffect(() => {
         setCode(props.problem.setup)
-        // ApiManager.getByProperty
-        // props.setRepetitions()
+        getRepsAndInterval()
     }, [props.problem])
 
     // skips to next random unsolved problem, but does not return the current problem
-    // TODO: needs to persist modified array of unsolved problems, otherwise skipped problems will come back in queue randomly
     const skipNewProblem = e => {
         ApiManager.getByProperty('userSolutions', 'profileId', JSON.parse(sessionStorage.user).id).then(solutions => {
             ApiManager.getAll('problems').then(problems => {
