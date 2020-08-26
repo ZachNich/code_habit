@@ -9,7 +9,6 @@ const HeatMapRow = props => {
         j++
     }
 
-    console.log('row data', props.data)
     return (
         <div className="heatmap_row">
             {props.data.map(data => {
