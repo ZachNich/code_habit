@@ -44,7 +44,7 @@ const Profile = props => {
             .then(data => {
                 let hardest = 0
                 for (let i = 0; i < data.length; i++) {
-                    if (data[i].quality >= data[hardest].quality) {
+                    if (data[i].quality <= data[hardest].quality) {
                         hardest = i;
                     }
                 }
