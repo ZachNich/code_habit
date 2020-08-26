@@ -57,7 +57,7 @@ const Lab = props => {
                     <Resources problem={problem} />
                 </div>
                 <div className="right_side">
-                    <Coder problem={problem} setProblem={setProblem} problems={problems} setProblems={setProblems} setResult={setResult} result={result} setSolve={setSolve} solve={solve} activate={activate} isReview={false} {...props} />
+                    <Coder problem={problem} setProblem={setProblem} problems={problems} setProblems={setProblems} setResult={setResult} setRepetitions={setRepetitions} setPrevInterval={setPrevInterval} result={result} setSolve={setSolve} solve={solve} set activate={activate} isReview={false} {...props} />
                     <TestResults result={result} clicked={clicked} />
                 </div>
                 {props.hasSuccessWindow ? createPortal(<SuccessWindow problem={problem} setResult={setResult} setProblems={setProblems} setSolve={setSolve} solve={solve} repetitions={repetitions} prevInterval={prevInterval} toggleSuccess={props.toggleSuccess} isReview={false} {...props}/>, document.getElementById('modal')) : null}
