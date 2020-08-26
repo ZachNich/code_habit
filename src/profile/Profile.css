@@ -66,6 +66,10 @@ p {
 .profile_stats > p {
     padding-bottom: .5em;
 }
+.stats_solutions_container {
+    overflow-y: scroll;
+    max-height: 50vh;
+}
 
 .profile_solution_container {
     white-space: pre-wrap;

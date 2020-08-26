@@ -235,9 +235,11 @@ const Profile = props => {
                         <p className="stats_block">Rated Hardest: {hardestProblem.title}</p>
                     </>
                     :
-                    solutionsProblems.map(solutionProblem => 
-                        <SolutionCard solution={solutionProblem} />
-                    )}
+                    <div className="stats_solutions_container">
+                        {solutionsProblems.map(solutionProblem => 
+                            <SolutionCard solution={solutionProblem} />
+                        )}
+                    </div>}
                 </div>
                 <div className="profile_graphs">
                     <h3 className="profile_header">
