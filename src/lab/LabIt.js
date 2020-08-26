@@ -17,16 +17,19 @@ const Lab = props => {
         {
             profileId: JSON.parse(sessionStorage.user).id,
             problemId: null, 
-            difficultyAssessed: null, 
+            quality: null, 
+            easeFactor: 2.5,
             timeTaken: 0, 
             description: "", 
             solveDate: null, 
             nextEncounterDate: null
         })
     const [clicked, setClicked] = useState(false);
+    const [repetitions, setRepetitions] = useState(0);
+    const [prevInterval, setPrevInterval] = useState(0);
 
     useEffect(() => {
-        ApiManager.getAll('userSolutions').then(solutions => {
+        ApiManager.getByProperty('userSolutions', 'profileId', JSON.parse(sessionStorage.user).id).then(solutions => {
             ApiManager.getAll('problems').then(problems => {
                 const unsolvedProblems = problems.filter(problem => !solutions.some(solution => solution.problemId === problem.id))
                 setProblems(unsolvedProblems)
@@ -54,10 +57,10 @@ const Lab = props => {
                     <Resources problem={problem} />
                 </div>
                 <div className="right_side">
-                    <Coder problem={problem} setProblem={setProblem} problems={problems} setProblems={setProblems} setResult={setResult} result={result} setSolve={setSolve} solve={solve} activate={activate} isReview={false} {...props} />
+                    <Coder problem={problem} setProblem={setProblem} problems={problems} setProblems={setProblems} setResult={setResult} setRepetitions={setRepetitions} setPrevInterval={setPrevInterval} result={result} setSolve={setSolve} solve={solve} set activate={activate} isReview={false} {...props} />
                     <TestResults result={result} clicked={clicked} />
                 </div>
-                {props.hasSuccessWindow ? createPortal(<SuccessWindow problem={problem} setResult={setResult} setProblems={setProblems} setSolve={setSolve} solve={solve} toggleSuccess={props.toggleSuccess} isReview={false} {...props}/>, document.getElementById('modal')) : null}
+                {props.hasSuccessWindow ? createPortal(<SuccessWindow problem={problem} setResult={setResult} setProblems={setProblems} setSolve={setSolve} solve={solve} repetitions={repetitions} prevInterval={prevInterval} toggleSuccess={props.toggleSuccess} isReview={false} {...props}/>, document.getElementById('modal')) : null}
             </div>
         </>
     )

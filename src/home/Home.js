@@ -34,7 +34,7 @@ const Home = props => {
     }
 
     const getUpcomingProblems = () => {
-        ApiManager.getAll('userSolutions').then(solutions => {
+        ApiManager.getByProperty('userSolutions', 'profileId', JSON.parse(sessionStorage.user).id).then(solutions => {
             ApiManager.getAll('problems').then(problems => {
                 const unsolvedProblems = problems.filter(problem => !solutions.some(solution => solution.problemId === problem.id))
                 setUpcomingProblems(unsolvedProblems)

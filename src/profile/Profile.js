@@ -44,7 +44,7 @@ const Profile = props => {
             .then(data => {
                 let hardest = 0
                 for (let i = 0; i < data.length; i++) {
-                    if (data[i].difficultyAssessed >= data[hardest].difficultyAssessed) {
+                    if (data[i].quality >= data[hardest].quality) {
                         hardest = i;
                     }
                 }
@@ -88,7 +88,7 @@ const Profile = props => {
                 for (let i = 0; i < fillArr.length; i++) {
                     for (let j = 0; j < 7; j++) {
                         if (thisMonthSolutions.some(el => {
-                            el.solveDate.substring(0, el.solveDate.indexOf('/')).contains(fillArr[i][j])
+                            el.solveDate.substring(0, el.solveDate.indexOf('/')).includes(fillArr[i][j])
                         })) {
                             fillArr[i][j] += '-y'
                         } else if (fillArr[i][j]) {
@@ -147,7 +147,7 @@ const Profile = props => {
         const labels = ["New Problems", "Reviews", "Burned Reviews"]
         const backgroundColor = ["#2ec4b6", "#e71d36", "#011627"]
         let data = [0, 0, 0]
-        ApiManager.getAll('userSolutions').then(solutions => {
+        ApiManager.getByProperty('userSolutions', 'profileId', JSON.parse(sessionStorage.user).id).then(solutions => {
             ApiManager.getAll('problems').then(problems => {
                 const unsolvedProblems = problems.filter(problem => !solutions.some(solution => solution.problemId === problem.id))
                 data[0] = unsolvedProblems.length
