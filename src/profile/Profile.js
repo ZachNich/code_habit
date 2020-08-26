@@ -87,18 +87,16 @@ const Profile = props => {
                 let thisMonthSolutions = solutions.filter(solution => parseInt(solution.solveDate.substring(0, solution.solveDate.indexOf('/'))) == month + 1)
                 for (let i = 0; i < fillArr.length; i++) {
                     for (let j = 0; j < 7; j++) {
-                        if (thisMonthSolutions.some(el => {
-                            el.solveDate.substring(0, el.solveDate.indexOf('/')).includes(fillArr[i][j])
-                        })) {
-                            fillArr[i][j] += '-y'
-                        } else if (fillArr[i][j]) {
-                            fillArr[i][j] += '-n'
+                        if (fillArr[i][j]) {
+                            if (thisMonthSolutions.some(solution => solution.solveDate.substring(solution.solveDate.indexOf('/') + 1, solution.solveDate.lastIndexOf('/')) == fillArr[i][j].toString())) {
+                                fillArr[i][j] += '-y'
+                            } else {
+                                fillArr[i][j] += '-n'
+                            }
                         }
                     }
                 }
             })
-        const columns = fillArr.length
-        const rows = fillArr[0].length
         const data = fillArr
         setHeatMap(data)
     }

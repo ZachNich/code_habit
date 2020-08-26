@@ -33,7 +33,6 @@ const Habit = props => {
             ApiManager.getAll('problems').then(problems => {
                 const dueReviews = solutions.filter(solution => Date.parse(solution.nextEncounterDate) <= Date.parse(new Date()))
                 const dontReviews = solutions.filter(solution => Date.parse(solution.nextEncounterDate) > Date.parse(new Date()))
-                console.log('due', dueReviews, 'dont', dontReviews)
                 const filteredReviews = dueReviews.filter(solution => !dontReviews.some(sol => solution.problemId === sol.problemId))
                 const reviewProblems = problems.filter(problem => filteredReviews.some(solution => solution.problemId === problem.id))
                 setReviews(reviewProblems)
